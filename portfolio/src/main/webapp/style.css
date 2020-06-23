@@ -15,16 +15,17 @@ When only applied this padding rule to the body there was still an issue with th
 #midTile {
   position:relative;
   text-align:center;
-  left:25%;
-  width:50%;
+  left:12.5%;
+  width:75%;
   height:50vh;
   background-color:teal;
 }
 
+/*Should find some generalizable way to autofit text in this box*/
 .tile {
   float:left;
-  width: 23%;
-  height: 23%;
+  width: 31%;
+  height: 31%;
   padding:1%;
   background-clip:content-box; 
   /*this handy line makes sure that padding is not 
@@ -53,6 +54,7 @@ When only applied this padding rule to the body there was still an issue with th
   height: 100%;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
+  font-size: .8vw; 
 }
 
 .tileFront {
