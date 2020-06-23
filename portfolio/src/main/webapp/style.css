@@ -16,8 +16,8 @@ When only applied this padding rule to the body there was still an issue with th
 #midTile {
   position:relative;
   text-align:center;
-  left:12.5%;
-  width:75%;
+  left:7.5%;
+  width:85%;
   height:95vh;
   background-color:teal;
   opacity:.6
@@ -25,7 +25,6 @@ When only applied this padding rule to the body there was still an issue with th
 
 /*Should find some generalizable way to autofit text in this box*/
 .tile {
-  opacity:1;
   float:left;
   width: 31%;
   height: 31%;
@@ -36,7 +35,10 @@ When only applied this padding rule to the body there was still an issue with th
   background-color:yellow; 
 
 }
-
+#Headshot{
+  position:relative;
+  width:12.5%;
+}
 .tileInner {
   position: relative;
   width: 100%;
