@@ -1,50 +1,65 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <title>My Portfolio</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="script.js"></script>
-  </head>
-  <body>
-    <div id="content">
-      <div id="midTile" >
+
+<head>
+  <meta charset="UTF-8">
+  <title>My Portfolio</title>
+  <link rel="stylesheet" href="style.css">
+  <!--Add icon library for linkedIn, faceBook, etc-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="script.js"></script>
+</head>
+
+<body>
+  <div id="content">
+    <div id="midTile">
       <p class="Title">David Morley</p>
+      <a target = "_blank" href="https://google.com"><i class="fa fa-dribbble"></i></a>
+      <a target = "_blank" href="#"><i class="fa fa-twitter"></i></a>
+      <a target = "_blank" href="#"><i class="fa fa-linkedin"></i></a>
+      <a target = "_blank" href="#"><i class="fa fa-facebook"></i></a>
       <p>This is my portfolio.</p>
-      <div class ="tile">
-        <div class="tileInner">
-        <div class = "tileFront">
-          <p class = "SubTitle"> Background </p> 
-
-        </div>
-        <div class = "tileBack">
-          I was born in Sacramento, CA and have spent most of my life living there. Ever since I was little I have been interested
-          in building and experimenting with different things, working on crafts with my mom and spending lots of time figuring out how I can fit projects together. 
-          In high school I joined an FRC team (robotics team) where I discovered my passion for programming and lead the team to many successful competitions. I am currently
-          a rising junior at UCLA where I am involved in the UAS team (drone club) and also pursue research in NLP through the Intel AI Student Ambassadors program
-
-          For fun I enjoy spending as much time as possible with my lovely dog, Bailee (I am a huge animal lover) as well as attending as many sporting events as I can. I love going
-          with a group of friends to all UCLA's basketball and football as we root them on even when our teams are not the best. When I'm pursuing these activities I like to spend time 
-          working on OS and hardware projects, building a server for my home and trying to buy old computers to use in new systems around my house. 
-
-        </div>
-        </div>
-      </div>
-      <div class ="tile">
+      <div class="tile">
         <div class="tileInner">
           <div class="tileFront">
-            <p class = "SubTitle"> More info  </p> 
+            <p class="SubTitle"> Background </p>
+
           </div>
-          <div class ="tileBack">
-            <p class= "SubTitle"> Here is the info </p>
+          <div class="tileBack">
+            I was born in Sacramento, CA and have spent most of my life living there. Ever since I was little I have
+            been interested
+            in building and experimenting with different things, working on crafts with my mom and spending lots of time
+            figuring out how I can fit projects together.
+            In high school I joined an FRC team (robotics team) where I discovered my passion for programming and lead
+            the team to many successful competitions. I am currently
+            a rising junior at UCLA where I am involved in the UAS team (drone club) and also pursue research in NLP
+            through the Intel AI Student Ambassadors program
+
+            For fun I enjoy spending as much time as possible with my lovely dog, Bailee (I am a huge animal lover) as
+            well as attending as many sporting events as I can. I love going
+            with a group of friends to all UCLA's basketball and football as we root them on even when our teams are not
+            the best. When I'm pursuing these activities I like to spend time
+            working on OS and hardware projects, building a server for my home and trying to buy old computers to use in
+            new systems around my house.
+
           </div>
         </div>
       </div>
-    </div> 
-      <p>Click here to get a random message:</p>
-      <button onclick="addRandomGreeting()">Hello</button>
-      <div id="greeting-container"></div>
+      <div class="tile">
+        <div class="tileInner">
+          <div class="tileFront">
+            <p class="SubTitle"> More info </p>
+          </div>
+          <div class="tileBack">
+            <p class="SubTitle"> Here is the info </p>
+          </div>
+        </div>
+      </div>
     </div>
-  </body>
-</html>
+    <p>Click here to get a random message:</p>
+    <button onclick="addRandomGreeting()">Hello</button>
+    <div id="greeting-container"></div>
+  </div>
+</body>
 
+</html>

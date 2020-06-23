@@ -6,7 +6,8 @@ When only applied this padding rule to the body there was still an issue with th
 #content {
   width: 100%;
   height:100vh;
-  background-color:orange;
+  /*background-color:orange;*/
+  background-image: url("images/websiteBackground.png");
 }
 
 #greeting-container {
@@ -17,12 +18,14 @@ When only applied this padding rule to the body there was still an issue with th
   text-align:center;
   left:12.5%;
   width:75%;
-  height:50vh;
+  height:95vh;
   background-color:teal;
+  opacity:.6
 }
 
 /*Should find some generalizable way to autofit text in this box*/
 .tile {
+  opacity:1;
   float:left;
   width: 31%;
   height: 31%;
