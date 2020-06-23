@@ -19,8 +19,8 @@ When only applied this padding rule to the body there was still an issue with th
   left:7.5%;
   width:85%;
   height:95vh;
-  background-color:teal;
-  opacity:.6
+  background-color: rgba(0,128,128,.6);
+
 }
 
 /*Should find some generalizable way to autofit text in this box*/
@@ -32,8 +32,13 @@ When only applied this padding rule to the body there was still an issue with th
   background-clip:content-box; 
   /*this handy line makes sure that padding is not 
   also colored by the background color*/ 
-  background-color:yellow; 
+  background-color:rgba(255, 255, 0, .65); 
 
+}
+.tileBack img, .tileFront img{
+  width:100%;
+  height:100%;
+  /*object-fit:cover;*/
 }
 #Headshot{
   position:relative;
@@ -74,5 +79,9 @@ When only applied this padding rule to the body there was still an issue with th
 }
 .Title{
   font-size:1.8vw; 
+}
+
+.SubTitle{
+  font-size:1.4vw;
 }
 /*comment*/

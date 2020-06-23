@@ -15,6 +15,14 @@
 /**
  * Adds a random greeting to the page.
  */
+
+ //random image generator 
+window.onload = function(){ 
+ document.getElementById("rFrontTile").addEventListener("mouseover", 
+ function() {
+  getRandomFile(document.querySelector("#rBackTile img"), "images/random/", "test", 4)
+ });}
+
 function addRandomGreeting() {
   const greetings =
       ['Hello world!', '¡Hola Mundo!', '你好，世界！', 'Bonjour le monde!'];
@@ -25,4 +33,18 @@ function addRandomGreeting() {
   // Add it to the page.
   const greetingContainer = document.getElementById('greeting-container');
   greetingContainer.innerText = greeting;
+}
+ //Precondition: Assume directory has images of form dirNameXX.jpg where XX is an integer 
+function getRandomFile(element, path, fileName, numElems){
+  
+
+  //would be ideal if files didn't have to follow a certain naming convention,
+  //but not sure this is possible with strictly server side JavaScript :(
+
+  //for now copy directly the example code with minor modifications
+  var numElemsInt = parseInt(numElems, 10);
+  console.log(numElemsInt);
+  var randomFile = path +fileName+(Math.floor(Math.random() * numElemsInt) + 1)+".jpg";
+  element.src = randomFile; 
+  console.log(randomFile);
 }
