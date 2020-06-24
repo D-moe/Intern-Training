@@ -1,87 +1,117 @@
-*{margin:0px; padding:0px;}
+* {
+  margin: 0px;
+  padding: 0px;
+}
+
 /*
 Purpose of this line it allow the background to extend throughout the whole page
 When only applied this padding rule to the body there was still an issue with the margin around the top by default
 */
+
 #content {
   width: 100%;
-  height:100vh;
-  /*background-color:orange;*/
+  height: 100vh;
   background-image: url("images/websiteBackground.png");
 }
 
 #greeting-container {
   margin-top: 20px;
 }
-#midTile {
-  position:relative;
-  text-align:center;
-  left:7.5%;
-  width:85%;
-  height:95vh;
-  background-color: rgba(0,128,128,.6);
 
+#mid-tile {
+  position: relative;
+  text-align: center;
+  left: 7.5%;
+  width: 85%;
+  height: 95vh;
+  background-color: rgba(0, 128, 128, .6);
 }
 
-/*Should find some generalizable way to autofit text in this box*/
+.front-tile-logo {
+  width: 40%;
+  height: 40%;
+}
+
+/*We should find some generalizable way to autofit text in this box*/
+
 .tile {
-  float:left;
+  float: left;
   width: 31%;
   height: 31%;
-  padding:1%;
-  background-clip:content-box; 
-  /*this handy line makes sure that padding is not 
-  also colored by the background color*/ 
-  background-color:rgba(255, 255, 0, .65); 
-
+  padding: 1%;
+  vertical-align: middle;
+  background-clip: content-box;
+  /*This handy line makes sure that padding is not 
+  also colored by the background color*/
+  background-color: rgba(255, 255, 0, .65);
 }
-.tileBack img, .tileFront img{
-  width:100%;
-  height:100%;
+
+.tile-back img, .tile-front img {
+  width: 100%;
+  height: 100%;
+  /*Uncomment line if don't want to distort image resolution*/
   /*object-fit:cover;*/
 }
-#Headshot{
-  position:relative;
-  width:12.5%;
+.title{
+  font-size:4em;
+  font-family:fantasty;
 }
-.tileInner {
+
+#headshot {
+  position: relative;
+  width: 12.5%;
+}
+
+#hammer-tile-logo{
+  width:64%;
+  height:40%;
+  padding-top:4%;
+  height:79%;
+}
+#juggling-tile-logo{
+  width:90%;
+  height:73%;
+  padding-top:4%;
+}
+ul {
+  list-style: none;
+}
+
+.tile-inner {
   position: relative;
   width: 100%;
   height: 100%;
   text-align: center;
   transition: transform 0.8s;
   transform-style: preserve-3d;
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
-.tile:hover .tileInner{
+.tile:hover .tile-inner {
   transform: rotateX(180deg);
 }
 
-.tileFront, .tileBack {
+.tile-front, .tile-back {
   position: absolute;
   width: 100%;
   height: 100%;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
-  font-size: .8vw; 
+  font-size: .8vw;
 }
 
-.tileFront {
-  /*background-color: #bbb;*/
-  /*color: black;*/
+.tile-front {
+  /*left empty in anticipation of further styling */
 }
 
-.tileBack {
-  /*background-color: #2980b9;
-  color: white;*/
+.tile-back {
   transform: rotateX(180deg);
 }
-.Title{
-  font-size:1.8vw; 
+
+.Title {
+  font-size: 1.8vw;
 }
 
-.SubTitle{
-  font-size:1.4vw;
+.sub-title {
+  font-size: 1.4vw;
 }
-/*comment*/

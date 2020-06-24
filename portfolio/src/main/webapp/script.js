@@ -17,10 +17,10 @@
  */
 
  //random image generator 
-window.onload = function(){ 
- document.getElementById("rFrontTile").addEventListener("mouseover", 
+window.onload = function SetImageOnMouseOver(){ 
+ document.getElementById("rand-front-tile").addEventListener("mouseover", 
  function() {
-  getRandomFile(document.querySelector("#rBackTile img"), "images/random/", "test", 4)
+  getRandomFile(/* element= */ document.querySelector("#rand-back-tile img"), /* path= */ "images/random/", /* fileName= */ "test", /* numElems= */ 4)
  });}
 
 function addRandomGreeting() {
@@ -37,14 +37,13 @@ function addRandomGreeting() {
  //Precondition: Assume directory has images of form dirNameXX.jpg where XX is an integer 
 function getRandomFile(element, path, fileName, numElems){
   
+  //It would be ideal if files didn't have to follow a certain naming convention,
+  //but not sure this is possible with strictly server side JavaScript. After
+  //conferring with help line seems this is indeed impossible. 
+  //TODO: Implement on server side to clean up need for numElems, etc in the directory 
+  //For now copy directly the example code with minor modifications.
 
-  //would be ideal if files didn't have to follow a certain naming convention,
-  //but not sure this is possible with strictly server side JavaScript :(
-
-  //for now copy directly the example code with minor modifications
   var numElemsInt = parseInt(numElems, 10);
-  console.log(numElemsInt);
   var randomFile = path +fileName+(Math.floor(Math.random() * numElemsInt) + 1)+".jpg";
   element.src = randomFile; 
-  console.log(randomFile);
 }
