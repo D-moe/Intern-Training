@@ -14,10 +14,26 @@
   <div id="content">
     <div id="mid-tile">
       <p class="title">David Morley</p>
-      <img id="headshot" alt="David Morley Headshot" src="images/Headshot.jpg"></img>
-      <p>
-        <a target="_blank" href="https://medium.com/@dmoe22"><i class="fa fa-dribbble"></i></a>
-        <a target="_blank" href="https://linkedin.com/in/22dmoe"><i class="fa fa-linkedin"></i></a>
+      <div class="portrait-tile">
+        <div class="portrait-tile-inner">
+          <div class="portrait-tile-front">
+            <img src="images/Headshot.jpg"></img>
+          </div>
+          <div class="portrait-tile-back">
+            <div style="overflow:auto; width:100%; height:100%">
+              <p> <b>College:</b> UCLA</p>
+              <p> <b>Degree:</b> Computer Science and Engineering</p>
+              <p> <b>Favorite Food:</b> Lasagna</p>
+              <p><b>Favorite T-shirt:</b> A teal t-shirt with a white penguin, it looks much cooler than it sounds.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p id="icons">
+        <a target="_blank" href="https://medium.com/@dmoe22"><i class="fa
+        fa-dribbble"></i></a>
+        <a target="_blank" href="https://linkedin.com/in/22dmoe"><i class="fa
+        fa-linkedin"></i></a>
         <a target="_blank" href="https://m.facebook.com/david.morley.104855"><i class="fa fa-facebook"></i></a>
       </p>
       <div class="tile">
@@ -27,7 +43,8 @@
             <img class="mountain-tile-logo" src="images/mountain.png" alt="mountain">
           </div>
           <div class="tile-back">
-            <iframe style="width:92%; height:100%" src="content/background.html" scrolling="no" frameborder="0"></iframe>
+            <iframe id="embed-text1" style="width:98%; height:100%" src="content/background.html" scrolling="yes"
+              frameborder="0"></iframe>
           </div>
         </div>
       </div>
@@ -49,7 +66,8 @@
           </div>
         </div>
       </div>
-      <!--TODO: implement these tiles in React as they are becoming redundant to construct-->
+      <!--TODO(morleyd): implement these tiles in React as they are becoming
+      redundant to construct-->
       <div class="tile">
         <div class="tile-inner">
           <div id="rand-front-tile" class="tile-front">
@@ -63,9 +81,6 @@
       </div>
     </div>
   </div>
-  <p>Click here to get a random message:</p>
-  <button onclick="addRandomGreeting()">Hello</button>
-  <div id="greeting-container"></div>
   </div>
 </body>
 

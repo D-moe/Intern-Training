@@ -4,8 +4,9 @@
 }
 
 /*
-Purpose of this line it allow the background to extend throughout the whole page
-When only applied this padding rule to the body there was still an issue with the margin around the top by default
+Purpose of this line it allows the background to extend throughout the whole page
+When only applied this padding rule to the body there was still an issue with
+the margin around the top by default
 */
 
 #content {
@@ -27,6 +28,15 @@ When only applied this padding rule to the body there was still an issue with th
   background-color: rgba(0, 128, 128, .6);
 }
 
+#icons {
+  padding-top: .5%;
+}
+
+#headshot {
+  width: 100%;
+  height: 100%;
+}
+
 .front-tile-logo {
   width: 40%;
   height: 40%;
@@ -35,62 +45,88 @@ When only applied this padding rule to the body there was still an issue with th
 /*We should find some generalizable way to autofit text in this box*/
 
 .tile {
+  /*Style was changed to have .33% at end so elements are perfectly centered
+  with that value of padding*/
   float: left;
-  width: 31%;
-  height: 31%;
+  width: 31.33%;
+  height: 31.33%;
   padding: 1%;
   vertical-align: middle;
   background-clip: content-box;
-  /*This handy line makes sure that padding is not 
-  also colored by the background color*/
+  /*This handy line makes sure that padding is not also colored by the
+  background color*/
   background-color: rgba(255, 255, 0, .65);
 }
 
-.tile-back img, .tile-front img {
+.portrait-tile-back {
+  overflow: auto;
+  width: 100%;
+  height: 100%
+}
+
+.tile-back img, .tile-front img, .portrait-tile-back img {
   width: 100%;
   height: 100%;
   /*Uncomment line if don't want to distort image resolution*/
   /*object-fit:cover;*/
 }
-.title{
-  font-size:4em;
-  font-family:fantasty;
+
+.title {
+  font-size: 4em;
+  font-family: fantasty;
 }
 
-#headshot {
-  position: relative;
-  width: 12.5%;
+#hammer-tile-logo {
+  width: 64%;
+  height: 40%;
+  padding-top: 4%;
+  height: 79%;
 }
 
-#hammer-tile-logo{
-  width:64%;
-  height:40%;
-  padding-top:4%;
-  height:79%;
+#juggling-tile-logo {
+  width: 90%;
+  height: 73%;
+  padding-top: 4%;
 }
-#juggling-tile-logo{
-  width:90%;
-  height:73%;
-  padding-top:4%;
-}
+
 /*This styles the iframe body for including the large background content*/
+
 html:not(root) body {
-  overflow-x:hidden;
-  overflow-y:auto;
-  width:100%;
-  height:100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  width: 100%;
+  height: 100%;
 }
+
 ul {
   list-style: none;
 }
 
-.tile-inner {
+.portrait-tile {
+  width: 13vw;
+  height: 15vw;
+  margin-left: 36vw;
+}
+
+.portrait-tile-front img {
+  width: 100%;
+  height: 100%;
+}
+
+.tile-inner, .portrait-tile-inner {
   position: relative;
   width: 100%;
   height: 100%;
   text-align: center;
   transition: transform 0.8s;
   transform-style: preserve-3d;
+}
+
+.tile-inner {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.portrait-tile-inner {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
@@ -98,7 +134,11 @@ ul {
   transform: rotateX(180deg);
 }
 
-.tile-front, .tile-back {
+.portrait-tile:hover .portrait-tile-inner {
+  transform: rotateY(180deg);
+}
+
+.tile-front, .tile-back, .portrait-tile-back, .portrait-tile-front {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -108,17 +148,45 @@ ul {
 }
 
 .tile-front {
-  /*left empty in anticipation of further styling */
+  /*This is left empty in anticipation of further styling*/
 }
 
 .tile-back {
   transform: rotateX(180deg);
 }
 
-.Title {
+.portrait-tile-front {
+  background-color: transparent;
+}
+
+.portrait-tile-back {
+  background-color: lightskyblue;
+  transform: rotateY(180deg);
+}
+
+.portrait-tile p {
+  padding-top: 8%;
+  padding-bottom: 8%;
+  font-size: 1.8em;
+}
+
+.title {
   font-size: 1.8vw;
 }
 
 .sub-title {
+  font-size: 1.75vw;
+}
+
+.sub-title ul {
   font-size: 1.4vw;
+}
+
+::-webkit-scrollbar {
+  display: none;
+  background: transparent;
+}
+
+li {
+  font-size: 1.3vw;
 }
