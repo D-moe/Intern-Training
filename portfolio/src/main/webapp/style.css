@@ -73,6 +73,13 @@ When only applied this padding rule to the body there was still an issue with th
   height:73%;
   padding-top:4%;
 }
+/*This styles the iframe body for including the large background content*/
+html:not(root) body {
+  overflow-x:hidden;
+  overflow-y:auto;
+  width:100%;
+  height:100%;
+}
 ul {
   list-style: none;
 }
