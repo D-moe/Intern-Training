@@ -6,7 +6,7 @@
 /*
 Purpose of this line it allows the background to extend throughout the whole page
 When only applied this padding rule to the body there was still an issue with
-the margin around the top by default
+the margin around the top by default.
 */
 
 #content {
@@ -42,11 +42,11 @@ the margin around the top by default
   height: 40%;
 }
 
-/*We should find some generalizable way to autofit text in this box*/
+/*We should find some generalizable way to autofit text in this box.*/
 
 .tile {
   /*Style was changed to have .33% at end so elements are perfectly centered
-  with that value of padding*/
+  with that value of padding.*/
   float: left;
   width: 31.33%;
   height: 31.33%;
@@ -54,7 +54,7 @@ the margin around the top by default
   vertical-align: middle;
   background-clip: content-box;
   /*This handy line makes sure that padding is not also colored by the
-  background color*/
+  background color.*/
   background-color: rgba(255, 255, 0, .65);
 }
 
@@ -67,7 +67,7 @@ the margin around the top by default
 .tile-back img, .tile-front img, .portrait-tile-back img {
   width: 100%;
   height: 100%;
-  /*Uncomment line if don't want to distort image resolution*/
+  /*Uncomment line if don't want to distort image resolution.*/
   /*object-fit:cover;*/
 }
 
@@ -89,7 +89,7 @@ the margin around the top by default
   padding-top: 4%;
 }
 
-/*This styles the iframe body for including the large background content*/
+/*This styles the iframe body for including the large background content.*/
 
 html:not(root) body {
   overflow-x: hidden;
@@ -111,6 +111,12 @@ ul {
 .portrait-tile-front img {
   width: 100%;
   height: 100%;
+}
+
+.portrait-tile-back div {
+  overflow: auto;
+  width: 100%;
+  height: 100%
 }
 
 .tile-inner, .portrait-tile-inner {
@@ -148,7 +154,7 @@ ul {
 }
 
 .tile-front {
-  /*This is left empty in anticipation of further styling*/
+  /*This is left empty in anticipation of further styling.*/
 }
 
 .tile-back {
