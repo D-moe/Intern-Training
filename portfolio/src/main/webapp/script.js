@@ -50,3 +50,13 @@ function getRandomFile(element, path, fileName, numElems) {
       path + fileName + (Math.floor(Math.random() * numElems) + 1) + '.jpg';
   element.src = randomFile;
 }
+/**
+ *
+ * @param {string} path - the path the given query refers to
+ * @param {DOM element} element - an element in the DOM for selecting
+ */
+function fetchAndModify(path, element) {
+  fetch(path).then(response => response.text()).then(content => 
+    element.innerHTML= content
+  )
+}
