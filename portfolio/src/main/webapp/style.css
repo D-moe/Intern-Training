@@ -1,13 +1,9 @@
+/*This allows the background to extend throughout the whole page.*/
+
 * {
   margin: 0px;
   padding: 0px;
 }
-
-/*
-Purpose of this line it allows the background to extend throughout the whole page
-When only applied this padding rule to the body there was still an issue with
-the margin around the top by default.
-*/
 
 #content {
   width: 100%;
@@ -67,8 +63,6 @@ the margin around the top by default.
 .tile-back img, .tile-front img, .portrait-tile-back img {
   width: 100%;
   height: 100%;
-  /*Uncomment line if don't want to distort image resolution.*/
-  /*object-fit:cover;*/
 }
 
 .title {
@@ -151,10 +145,6 @@ ul {
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   font-size: .8vw;
-}
-
-.tile-front {
-  /*This is left empty in anticipation of further styling.*/
 }
 
 .tile-back {
