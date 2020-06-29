@@ -56,7 +56,24 @@ function getRandomFile(element, path, fileName, numElems) {
  * @param {DOM element} element - an element in the DOM for selecting
  */
 function fetchAndModify(path, element) {
-  fetch(path).then(response => response.text()).then(content => 
-    element.innerHTML= content
-  )
+  fetch(path)
+      .then(response => response.text())
+      .then(content => element.innerHTML = content)
+}
+function fetchAndChangeBody(path) {
+  fetch(path)
+      .then(response => response.json())
+      .then(
+          json => {
+            var index = 0;
+            for (index in json) {
+              console.log(json[index]);
+              const target = document.getElementById("comment");
+              let newComment = document.createElement("p");
+              newComment.innerText = json[index];
+              target.appendChild(newComment);
+              index++;
+            }
+          }
+      )
 }
