@@ -51,7 +51,7 @@ public class DataServlet extends HttpServlet {
     // generated JSON looks much nicer to parse in the browser.
     Gson gson = new GsonBuilder().setPrettyPrinting().create();
     String json = gson.toJson(userData);
-    System.out.format("Printting out the following JSON: %s", json);
+    System.out.format("Printing out the following JSON: %s", json);
     response.getWriter().println(json);
   }
 
