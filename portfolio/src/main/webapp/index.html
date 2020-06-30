@@ -30,10 +30,8 @@
         </div>
       </div>
       <p id="icons">
-        <a target="_blank" href="https://medium.com/@dmoe22"><i class="fa
-        fa-dribbble"></i></a>
-        <a target="_blank" href="https://linkedin.com/in/22dmoe"><i class="fa
-        fa-linkedin"></i></a>
+        <a target="_blank" href="https://medium.com/@dmoe22"><i class="fa fa-dribbble"></i></a>
+        <a target="_blank" href="https://linkedin.com/in/22dmoe"><i class="fa fa-linkedin"></i></a>
         <a target="_blank" href="https://m.facebook.com/david.morley.104855"><i class="fa fa-facebook"></i></a>
       </p>
       <div class="tile">
@@ -83,7 +81,21 @@
         <p></p>
         <button onclick="fetchAndModify('/data', document.getElementById('comment'))">Click me</button>
       </div>
+      <div id="prior-comments" onload="loadComments()">
+
+      </div>
+      <div id="full-comment">
+        <form action="/data" method="POST">
+          <textarea class="comment-body-form" name="comment-body"
+            onfocus="this.value='';">Your comment goes here.</textarea>
+          <div id="submit-panel">
+            <textarea class="user" name="user" onfocus="this.value=''">Username</textarea>
+            <input id="comment-submit" type="submit" value="Comment">
+          </div>
+        </form>
+      </div>
     </div>
+  </div>
   </div>
   </div>
 </body>

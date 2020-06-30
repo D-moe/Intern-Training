@@ -1,2 +1,7 @@
 target/
 .idea
+walkthroughs
+tests
+portfolio/.*
+portfolio/finalClangFormat
+portfolio/google_format

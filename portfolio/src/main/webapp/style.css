@@ -9,6 +9,17 @@ When only applied this padding rule to the body there was still an issue with
 the margin around the top by default.
 */
 
+textarea {
+  text-align: center;
+}
+
+textarea:focus {
+  outline: none;
+  text-align: center;
+}
+
+/*Remove the default highlight around a textarea when selected in Chrome.*/
+
 #content {
   width: 100%;
   height: 100vh;
@@ -35,6 +46,16 @@ the margin around the top by default.
 #headshot {
   width: 100%;
   height: 100%;
+}
+
+#prior-comments {
+  width: 80%;
+  height: 20%;
+  background-color: rgba(0, 128, 128, .4);
+  margin-left: 10%;
+  margin-top: 1%;
+  border: .1px lightgray;
+  overflow: auto;
 }
 
 .front-tile-logo {
@@ -188,6 +209,14 @@ ul {
   font-size: 1.4vw;
 }
 
+.sub-script {
+  font-size: .8vw;
+}
+
+.comment-body {
+  font-size: 1.4vw;
+}
+
 ::-webkit-scrollbar {
   display: none;
   background: transparent;
@@ -195,4 +224,40 @@ ul {
 
 li {
   font-size: 1.3vw;
+}
+
+.comment-body {
+  height: 2.5vh;
+  font-size: 1vw;
+}
+
+.comment-body-form {
+  font-size: .5vw;
+  height:2.5vh;
+}
+
+.user {
+  vertical-align: top;
+  font-size: .7vw;
+  height: 1.25vh;
+  display: block;
+}
+
+#comment-submit {
+  vertical-align: top;
+  border: none;
+  background-color: greenyellow;
+  height: 1.25vh;
+  display: block;
+}
+
+#submit-panel {
+  width: auto;
+  height: 2.5vh;
+  display: inline-block;
+  vertical-align: top;
+}
+
+#full-comment{
+  margin-top:.4%;
 }
