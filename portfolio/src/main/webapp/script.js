@@ -12,9 +12,8 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-// random image generator
-window.onload = SetImageOnMouseOver;
 window.onload = (event) => {
+  SetImageOnMouseOver();
   loadComments();
 };
 /**
