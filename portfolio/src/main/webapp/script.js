@@ -62,40 +62,37 @@ function fetchAndModify(path, element) {
       .then(content => element.innerHTML = content)
 }
 /*
- * This code creates an innerHTML and then reads its text to remove special
+ * Creates an innerHTML element and then reads its text to remove special
  * characters from the input
  * @param {string} str The input to remove special characters from to prevent
  *     scripting attacks
  */
-var sanitizeHTML = function(str) {
-  var temp = document.createElement('div');
+function sanitizeHtml(str) {
+  let temp = document.createElement('div');
   temp.textContent = str;
   return temp.innerHTML;
 };
 
 
 /*
- * This function fetches the value return by the given data service and then
+ * Fetches the value return by the given data service and then
  * modifies the content of a div to store each of the response values as a
  * paragraph.
  * @param {string} path The url of the data service to use
  */
 function fetchAndChangeBody(path) {
   fetch(path).then(response => response.json()).then(json => {
-    let index = 0;
     for (index in json) {
-      console.log(json[index]);
       const target = document.getElementById('comment');
       let newComment = document.createElement('p');
       newComment.innerText = json[index];
       target.appendChild(newComment);
-      index++;
     }
   })
 }
 
 /*
- * This function fetches the comment data and adds each of them to the loaded
+ * Fetches the comment data and adds each of them to the loaded
  * content.
  * TODO(morleyd): change individual comment load to be asynchronous to improve
  * performance. It might also make sense to have a hard limit on the number of
@@ -106,11 +103,8 @@ function loadComments() {
       .then(response => response.json())
       .then(
           json => {
-            console.log(json)
-            var index = 0;
             for (index in json) {
               let userName = json[index]['userName'];
-              console.log(userName)
               let commentBody = json[index]['commentBody'];
               addComment(/* name= */ userName, /* commentBody= */ commentBody);
             }
@@ -134,7 +128,7 @@ function addComment(name, content) {
   user.className = 'sub-script'
   // We need to make sure to strip comments of any special chars they may have
   // in order to prevent injection attacks
-  user.innerText = '-' + sanitizeHTML(name);
-  body.innerText = sanitizeHTML(content);
+  user.innerText = '-' + sanitizeHtml(/* str= */ name);
+  body.innerText = sanitizeHtml(/* str= */ content);
   target.appendChild(newComment);
 }
