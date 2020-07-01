@@ -13,13 +13,13 @@
 // the License.
 
 window.onload = (event) => {
-  SetImageOnMouseOver();
+  setImageOnMouseOver();
   loadComments();
 };
 /**
- * Change the given image to a random one whenever the user hovers over
+ * Change the given image to a random one whenever the user hovers over.
  */
-function SetImageOnMouseOver() {
+function setImageOnMouseOver() {
   document.getElementById('rand-front-tile')
       .addEventListener('mouseover', function() {
         getRandomFile(
@@ -27,6 +27,13 @@ function SetImageOnMouseOver() {
             /* path= */ 'images/random/', /* fileName= */ 'test',
             /* numElems= */ 4)
       });
+}
+/**
+ * Change the visibility of the comment fields so the user can add a new
+ * comment.
+ */
+function showComment() {
+  document.getElementById("add-comment").style.visibility="visible";
 }
 
 /**
@@ -74,7 +81,7 @@ function sanitizeHtml(str) {
 };
 
 
-/*
+/**
  * Fetches the value return by the given data service and then
  * modifies the content of a div to store each of the response values as a
  * paragraph.
@@ -91,7 +98,7 @@ function fetchAndChangeBody(path) {
   })
 }
 
-/*
+/**
  * Fetches the comment data and adds each of them to the loaded
  * content.
  * TODO(morleyd): change individual comment load to be asynchronous to improve
@@ -113,7 +120,7 @@ function loadComments() {
       )
 }
 
-/**
+/** 
  * A helper that creates the divs for a new comment, intended to be called by
  * loadComments.
  * @param {string} name The name of the user who made the comment

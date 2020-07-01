@@ -30,5 +30,6 @@ public class DeleteData extends HttpServlet {
     for (Entity entity : results.asIterable()) {
       storeData.delete(entity.getKey());
     }
+    response.sendRedirect("index.html");
   }
 }
