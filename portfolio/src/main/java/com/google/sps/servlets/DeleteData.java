@@ -16,7 +16,7 @@ import com.google.appengine.api.datastore.Query;
 @WebServlet("/deletedata")
 public class DeleteData extends HttpServlet {
   @Override
-  public void doGet(HttpServletRequest request, HttpServletResponse response)
+  public void doPost(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
     DatastoreService storeData = DatastoreServiceFactory.getDatastoreService();
     // TODO(morleyd): See if this code generalizes for >500 entries, think there

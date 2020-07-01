@@ -87,17 +87,18 @@
       </div>
       <div id="prior-comments" onload="loadComments()">
         <div class="input-panel">
-          <input id="select-num-results" type="number" value="20" min="0" max="300" step="10" />
+          <input id="select-num-results" name="limit" type="number" value="20" min="0" max="300" step="1"
+            form="data-reload" />
           <button type="submit" class="btn" form="data-reload">
             <span class="glyphicon glyphicon-refresh"></span>
           </button>
-          <button type="submit" class="btn" form="data-delete">
+          <button type="button" class="btn" onclick="clearComments()">
             <span class="glyphicon glyphicon-trash"></span>
           </button>
           <button type="submit" class="btn" form="data-fetch">
             <span class="glyphicon glyphicon-ok"></span>
           </button>
-          <button type="input" class="btn" onclick="showComment()">
+          <button type="button" class="btn" onclick="showComment()">
             <span class="glyphicon glyphicon-plus"></span>
           </button>
         </div>
@@ -113,8 +114,6 @@
           </div>
         </form>
       </div>
-      <form id="data-delete" action="/deletedata" method="GET">
-      </form>
       <form id="data-reload" action="/data" method="POST">
         <input type="hidden" name="refresh" value="true">
       </form>

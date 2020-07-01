@@ -33,7 +33,7 @@ function setImageOnMouseOver() {
  * comment.
  */
 function showComment() {
-  document.getElementById("add-comment").style.visibility="visible";
+  document.getElementById('add-comment').style.visibility = 'visible';
 }
 
 /**
@@ -106,21 +106,21 @@ function fetchAndChangeBody(path) {
  * comments loaded, think about this for future implementations.
  */
 function loadComments() {
-  fetch('\data')
+  fetch('/data')
       .then(response => response.json())
       .then(
           json => {
             for (index in json) {
               let userName = json[index]['userName'];
               let commentBody = json[index]['commentBody'];
-              addComment(/* name= */ userName, /* commentBody= */ commentBody);
+              addComment(/* name= */ userName, /* content= */ commentBody);
             }
           }
 
       )
 }
 
-/** 
+/**
  * A helper that creates the divs for a new comment, intended to be called by
  * loadComments.
  * @param {string} name The name of the user who made the comment
@@ -138,4 +138,29 @@ function addComment(name, content) {
   user.innerText = '-' + sanitizeHtml(/* str= */ name);
   body.innerText = sanitizeHtml(/* str= */ content);
   target.appendChild(newComment);
+}
+/**
+ * Clear all generated comments from database and refetch.
+ */
+function clearComments() {
+  fetch('/deletedata', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json;charset=utf-8'},
+    body: ''
+  }).then(clearBody()).then(loadComments())
+}
+
+/**
+ * Clear body of the comments div, removing all prior comments
+ */
+function clearBody() {
+  let body = document.querySelectorAll('.comment-body');
+  let names = document.querySelectorAll('.sub-script');
+  for (const commentBody of body) {
+    console.log(commentBody);
+    commentBody.parentNode.removeChild(commentBody);
+  }
+  for (const userName of names) {
+    userName.parentNode.removeChild(userName);
+  }
 }
