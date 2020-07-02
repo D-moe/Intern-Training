@@ -32,8 +32,13 @@ public class DataServlet extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
     response.setContentType("text/html;");
-
-    // The additional parameters used here ensure that the
+    String cacheValue = request.getParameter("refresh");
+    boolean refreshCache = Boolean.parseBoolean(cacheValue);
+    if (refreshCache) {
+      System.out.println("Refresh cache");
+      refreshData(request, response);
+    }
+    // The additional parameters used here ensure that the  
     // generated JSON looks much nicer to parse in the browser.
     Gson gson = new GsonBuilder().setPrettyPrinting().create();
     String json = gson.toJson(userData);

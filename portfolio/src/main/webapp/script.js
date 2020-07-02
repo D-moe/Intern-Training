@@ -14,7 +14,7 @@
 
 window.onload = (event) => {
   setImageOnMouseOver();
-  loadComments();
+  loadComments('/data');
 };
 /**
  * Change the given image to a random one whenever the user hovers over.
@@ -104,9 +104,10 @@ function fetchAndChangeBody(path) {
  * TODO(morleyd): change individual comment load to be asynchronous to improve
  * performance. It might also make sense to have a hard limit on the number of
  * comments loaded, think about this for future implementations.
+ * @param {string} path The path to use when fetching data
  */
-function loadComments() {
-  fetch('/data')
+function loadComments(path) {
+  fetch(path)
       .then(response => response.json())
       .then(
           json => {
@@ -147,7 +148,7 @@ function clearComments() {
     method: 'POST',
     headers: {'Content-Type': 'application/json;charset=utf-8'},
     body: ''
-  }).then(clearBody()).then(loadComments())
+  }).then(clearBody()).then(loadComments('/data?refresh=true'))
 }
 
 /**
