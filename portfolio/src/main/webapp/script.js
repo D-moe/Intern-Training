@@ -1,5 +1,5 @@
 /**
- * Set initial actions to be run when window first loads
+ * Set initial actions to be run when window first loads.
  */
 window.onload = (event) => {
   setImageOnMouseOver();
