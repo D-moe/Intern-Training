@@ -68,7 +68,7 @@ function fetchAndModify(path, element) {
       .then(response => response.text())
       .then(content => element.innerHTML = content)
 }
-/*
+/**
  * Creates an innerHTML element and then reads its text to remove special
  * characters from the input
  * @param {string} str The input to remove special characters from to prevent
@@ -89,9 +89,9 @@ function sanitizeHtml(str) {
  */
 function fetchAndChangeBody(path) {
   fetch(path).then(response => response.json()).then(json => {
+    const target = document.getElementById('comment');
+    let newComment = document.createElement('p');
     for (index in json) {
-      const target = document.getElementById('comment');
-      let newComment = document.createElement('p');
       newComment.innerText = json[index];
       target.appendChild(newComment);
     }
@@ -111,9 +111,9 @@ function loadComments(path) {
       .then(response => response.json())
       .then(
           json => {
-         console.log("Load comment is now running");
-	      console.log("The json is");
-	      console.log(json);
+            console.log('Load comment is now running');
+            console.log('The json is');
+            console.log(json);
             for (index in json) {
               let userName = json[index]['userName'];
               let commentBody = json[index]['commentBody'];
@@ -151,16 +151,13 @@ function clearComments() {
     method: 'POST',
     headers: {'Content-Type': 'application/json;charset=utf-8'},
     body: ''
-  }).then(
-      response =>{
-	  console.log("The response is");
-	  console.log(response);
-	  clearBody();
-      }
-  ).then(empty =>{
-      loadComments('/data?refresh=true');
-  }
-  )
+  })
+      .then(() => {
+        clearBody();
+      })
+      .then(() => {
+        loadComments('/data?refresh=true');
+      })
 }
 
 /**
@@ -168,7 +165,7 @@ function clearComments() {
  */
 function clearBody() {
   let body = document.querySelectorAll('.comment-body');
-  console.log("The body is");
+  console.log('The body is');
   console.log(body);
   let names = document.querySelectorAll('.sub-script');
   for (const commentBody of body) {

@@ -19,6 +19,13 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.sps.objects.User;
 
+/**
+ * A class to fetch data from the datastore library.
+ * @param userData The current data that has been fetched from the datastore
+ *     library, it acts as a local cache of the data that has been recorded.
+ *     Both the doGet and doPost methods rely on this local cache, only
+ *     refreshing if the refresh parameter is specified and true.
+ */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
   private ArrayList<User> userData = new ArrayList<User>();
@@ -28,6 +35,10 @@ public class DataServlet extends HttpServlet {
   public void init() {
     storeData = DatastoreServiceFactory.getDatastoreService();
   }
+  /**
+   * Get the value of the data stored in userData, only refresh this data from
+   * the database if refresh is defined and true in the request.
+   */
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
@@ -38,7 +49,7 @@ public class DataServlet extends HttpServlet {
       System.out.println("Refresh cache");
       refreshData(request, response);
     }
-    // The additional parameters used here ensure that the  
+    // The additional parameters used here ensure that the
     // generated JSON looks much nicer to parse in the browser.
     Gson gson = new GsonBuilder().setPrettyPrinting().create();
     String json = gson.toJson(userData);
@@ -86,8 +97,8 @@ public class DataServlet extends HttpServlet {
 
     String requestLimit = request.getParameter("limit");
 
-    // Convert the input to an integer.
     try {
+      // Convert the input to an integer.
       queryLimit = Integer.parseInt(requestLimit);
       System.out.println("parse successful");
     } catch (NumberFormatException e) {
