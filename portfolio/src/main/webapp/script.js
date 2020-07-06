@@ -1,5 +1,14 @@
 /**
- * Set initial actions to be run when window first loads
+ * Ensure that Url properly reloads on back arrow, prevents error that was
+ * occurring from reused upload Url. This may not be the most friendly solution
+ * for other browsers look at the following link for reference:
+ * https://stackoverflow.com/questions/43043113/how-to-force-reloading-a-page-when-using-browser-back-button
+ */
+if (performance.navigation.type == 2) {
+  updateImageUrl();
+}
+/**
+ * Set initial actions to be run when window first loads.
  */
 window.onload = (event) => {
   setImageOnMouseOver();
@@ -158,4 +167,15 @@ function clearBody() {
   for (const userName of names) {
     userName.parentNode.removeChild(userName);
   }
+}
+
+function updateImageUrl() {
+  fetch('/blobstore-upload-url')
+      .then((response) => {
+        return response.text();
+      })
+      .then((imageUploadUrl) => {
+        const messageForm = document.getElementById('data-fetch');
+        messageForm.action = imageUploadUrl;
+      });
 }

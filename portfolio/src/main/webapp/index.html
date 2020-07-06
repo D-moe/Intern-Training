@@ -18,7 +18,7 @@
   </script>
 </head>
 
-<body>
+<body onpageshow="updateImageUrl()">
   <div id="content">
     <div id="mid-tile">
       <p class="title">David Morley</p>
@@ -110,6 +110,9 @@
               onfocus="this.value='';">Your comment goes here.</textarea>
             <div id="submit-panel">
               <textarea class="user" name="user" onfocus="this.value=''">Username</textarea>
+            </div>
+            <div id="file-upload">
+              <input type="file" name="image">
             </div>
           </div>
         </form>
