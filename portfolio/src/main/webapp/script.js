@@ -1,17 +1,6 @@
-// Copyright 2019 Google LLC
-//
-// Licensed under the Apache License, Version 2.0 (the "License"); you may not
-// use this file except in compliance with the License. You may obtain a copy of
-// the License at
-//
-//     https://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
-// WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
-// License for the specific language governing permissions and limitations under
-// the License.
-
+/**
+ * Set initial actions to be run when window first loads
+ */
 window.onload = (event) => {
   setImageOnMouseOver();
   loadComments('/data');
@@ -37,7 +26,8 @@ function showComment() {
 }
 
 /**
- *
+ * Return a random file, currently used to fetch a random image and display on
+ * hover.
  * @param {string} element - which DOM element to modify
  * @param {string} path - the path starting from the webapp/ directory that the
  *     files are located in
@@ -53,13 +43,12 @@ function getRandomFile(element, path, fileName, numElems) {
   // TODO(morleyd): Implement on server side to clean up need for numElems, etc
   // in the directory For now copy directly the example code with minor
   // modifications.
-
-  var randomFile =
+  let randomFile =
       path + fileName + (Math.floor(Math.random() * numElems) + 1) + '.jpg';
   element.src = randomFile;
 }
 /**
- *
+ * Get response from url and modify given element innerHtml.
  * @param {string} path - the path the given query refers to
  * @param {DOM element} element - an element in the DOM for selecting
  */
@@ -69,15 +58,15 @@ function fetchAndModify(path, element) {
       .then(content => element.innerHTML = content)
 }
 /**
- * Creates an innerHTML element and then reads its text to remove special
+ * Creates an innerHtml element and then reads its text to remove special
  * characters from the input
- * @param {string} str The input to remove special characters from to prevent
- *     scripting attacks
+ * @param {string} inputText The input to remove special characters from to
+ *     prevent scripting attacks
  */
-function sanitizeHtml(str) {
-  let temp = document.createElement('div');
-  temp.textContent = str;
-  return temp.innerHTML;
+function sanitizeHtml(inputText) {
+  let convertDiv = document.createElement('div');
+  convertDiv.textContent = inputText;
+  return convertDiv.innerHTML;
 };
 
 
@@ -111,9 +100,6 @@ function loadComments(path) {
       .then(response => response.json())
       .then(
           json => {
-            console.log('Load comment is now running');
-            console.log('The json is');
-            console.log(json);
             for (index in json) {
               let userName = json[index]['userName'];
               let commentBody = json[index]['commentBody'];
@@ -125,7 +111,7 @@ function loadComments(path) {
 }
 
 /**
- * A helper that creates the divs for a new comment, intended to be called by
+ * Creates divs for a new comment, intended to be called by
  * loadComments.
  * @param {string} name The name of the user who made the comment
  * @param {string} content The body of the comment
@@ -161,15 +147,12 @@ function clearComments() {
 }
 
 /**
- * Clear body of the comments div, removing all prior comments
+ * Clear body of the comments div, removing all prior comments.
  */
 function clearBody() {
   let body = document.querySelectorAll('.comment-body');
-  console.log('The body is');
-  console.log(body);
   let names = document.querySelectorAll('.sub-script');
   for (const commentBody of body) {
-    console.log(commentBody);
     commentBody.parentNode.removeChild(commentBody);
   }
   for (const userName of names) {
