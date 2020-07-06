@@ -15,16 +15,16 @@ public final class User {
 
   public String getCommentBody() { return this.commentBody; }
 
-
   @Override
-    public boolean equals(Object o) {
-        if (o == this)
-            return true;
-        if (!(o instanceof User)) {
-            return false;
-        }
-        User user = (User) o;
-        return Objects.equals(userName, user.userName) && Objects.equals(commentBody, user.commentBody);
+  public boolean equals(Object o) {
+    if (o == this)
+      return true;
+    if (!(o instanceof User)) {
+      return false;
+    }
+    User user = (User)o;
+    return Objects.equals(userName, user.userName) &&
+        Objects.equals(commentBody, user.commentBody);
   }
 
   @Override
@@ -34,9 +34,9 @@ public final class User {
 
   @Override
   public String toString() {
-    return "{" +
-      " userName='" + getUserName() + "'" +
-      ", commentBody='" + getCommentBody() + "'" +
-      "}";
+    return "{"
+        + " userName='" + getUserName() + "'"
+        + ", commentBody='" + getCommentBody() + "'"
+        + "}";
   }
 }
