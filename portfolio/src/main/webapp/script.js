@@ -111,6 +111,9 @@ function loadComments(path) {
       .then(response => response.json())
       .then(
           json => {
+         console.log("Load comment is now running");
+	      console.log("The json is");
+	      console.log(json);
             for (index in json) {
               let userName = json[index]['userName'];
               let commentBody = json[index]['commentBody'];
@@ -148,7 +151,16 @@ function clearComments() {
     method: 'POST',
     headers: {'Content-Type': 'application/json;charset=utf-8'},
     body: ''
-  }).then(clearBody()).then(loadComments('/data?refresh=true'))
+  }).then(
+      response =>{
+	  console.log("The response is");
+	  console.log(response);
+	  clearBody();
+      }
+  ).then(empty =>{
+      loadComments('/data?refresh=true');
+  }
+  )
 }
 
 /**
@@ -156,6 +168,8 @@ function clearComments() {
  */
 function clearBody() {
   let body = document.querySelectorAll('.comment-body');
+  console.log("The body is");
+  console.log(body);
   let names = document.querySelectorAll('.sub-script');
   for (const commentBody of body) {
     console.log(commentBody);
