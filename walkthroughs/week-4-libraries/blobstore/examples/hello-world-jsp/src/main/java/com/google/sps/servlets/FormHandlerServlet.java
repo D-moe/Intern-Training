@@ -65,6 +65,7 @@ public class FormHandlerServlet extends HttpServlet {
   private String getUploadedFileUrl(HttpServletRequest request, String formInputElementName) {
     BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
     Map<String, List<BlobKey>> blobs = blobstoreService.getUploads(request);
+    System.out.println(blobs);
     List<BlobKey> blobKeys = blobs.get("image");
 
     // User submitted form without selecting a file, so we can't get a URL. (dev server)
@@ -73,6 +74,7 @@ public class FormHandlerServlet extends HttpServlet {
     }
 
     // Our form only contains a single file input, so get the first index.
+    System.out.println("the number of elements is "+blobKeys.size());
     BlobKey blobKey = blobKeys.get(0);
 
     // User submitted form without selecting a file, so we can't get a URL. (live server)
