@@ -20,14 +20,14 @@ import com.google.gson.GsonBuilder;
 import com.google.sps.objects.Comment;
 
 /**
- * A class to fetch data from the datastore library.
+ * Store data through the datastore service using get/post requests.
  */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
-  /* The current data that has been fetched from the datastore library, it acts
-   * as a local cache of the data that has been recorded. Both the doGet and
-   * doPost methods rely on this local cache, only refreshing if the refresh
-   * parameter is specified and true.
+  /* The userData is the current data that has been fetched from the datastore
+   * service, it acts as a local cache of the data that has been recorded. Both
+   * the doGet and doPost methods rely on this local cache, only refreshing if
+   * the refresh parameter is specified and true.
    */
   private ArrayList<Comment> userData = new ArrayList<Comment>();
   private DatastoreService storeData;
@@ -62,7 +62,6 @@ public class DataServlet extends HttpServlet {
   public void doPost(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
     response.setContentType("text/html");
-
     boolean refreshCache;
     String cacheValue = request.getParameter("refresh");
     refreshCache = Boolean.parseBoolean(cacheValue);
@@ -72,13 +71,20 @@ public class DataServlet extends HttpServlet {
       response.sendRedirect("/index.html");
       return;
     }
-    // TODO(morleyd): Add error checking in case some of the expected headers
-    // are not included in the request, etc.
 
     long timeStamp = System.currentTimeMillis();
     Entity commentEntity = new Entity("Comment");
     String userName = request.getParameter("user");
     String commentData = request.getParameter("comment-body");
+    // Handle error checking in case invalid data is provided.
+    if (userName == null || commentData == null) {
+      System.err.println("An error occurred while receiving the request");
+      System.err.println("The userName had a value of " + userName);
+      System.err.println("The commentData had a value of " + commentData);
+      response.sendRedirect("/index.html");
+      return;
+    }
+
     commentEntity.setProperty("user", userName);
     commentEntity.setProperty("comment", commentData);
     commentEntity.setProperty("timestamp", timeStamp);
@@ -93,9 +99,7 @@ public class DataServlet extends HttpServlet {
   }
   private void refreshData(HttpServletRequest request,
                            HttpServletResponse response) {
-
     int queryLimit;
-
     String requestLimit = request.getParameter("limit");
 
     try {
