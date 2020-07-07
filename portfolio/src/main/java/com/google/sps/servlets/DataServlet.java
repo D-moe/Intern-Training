@@ -24,10 +24,10 @@ import com.google.sps.objects.Comment;
  */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
-  /**@param userData The current data that has been fetched from the datastore
-   *     library, it acts as a local cache of the data that has been recorded.
-   *     Both the doGet and doPost methods rely on this local cache, only
-   *     refreshing if the refresh parameter is specified and true.
+  /* The current data that has been fetched from the datastore library, it acts
+   * as a local cache of the data that has been recorded. Both the doGet and
+   * doPost methods rely on this local cache, only refreshing if the refresh
+   * parameter is specified and true.
    */
   private ArrayList<Comment> userData = new ArrayList<Comment>();
   private DatastoreService storeData;
@@ -110,7 +110,7 @@ public class DataServlet extends HttpServlet {
 
     // Reset the data.
     userData.clear();
-    System.out.println("The current queryLimit is " + queryLimit +".");
+    System.out.println("The current queryLimit is " + queryLimit + ".");
     FetchOptions options = FetchOptions.Builder.withLimit(queryLimit);
     Query recentComments =
         new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
