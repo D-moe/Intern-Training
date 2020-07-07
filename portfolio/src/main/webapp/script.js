@@ -110,9 +110,18 @@ function loadComments(path) {
       .then(
           json => {
             for (index in json) {
-              let userName = json[index]['userName'];
-              let commentBody = json[index]['commentBody'];
-              addComment(/* name= */ userName, /* content= */ commentBody);
+              let currentIndex = json[index];
+              let userName = currentIndex['userName'];
+              let commentBody = currentIndex['commentBody'];
+              let imageUrl = undefined;
+              // we need to check whether an image Url exists
+              console.log(json);
+              if (json[index].hasOwnProperty('imageLink')) {
+                imageUrl = currentIndex['imageLink'];
+              }
+              addComment(
+                  /* name= */ userName, /* content= */ commentBody,
+                  /* url= */ imageUrl);
             }
           }
 
@@ -124,18 +133,27 @@ function loadComments(path) {
  * loadComments.
  * @param {string} name The name of the user who made the comment
  * @param {string} content The body of the comment
+ * @param {string} url The url of an image to add to the comment, this may be
+ *     undefined
  */
-function addComment(name, content) {
+function addComment(name, content, url) {
   const target = document.getElementById('prior-comments');
   let newComment = document.createElement('div');
+  // add an image to the comment only if image is defined
+  if (url !== undefined) {
+    let img = newComment.appendChild(document.createElement('img'));
+    img.className = 'comment-img'
+    img.src = url; 
+  }
   let body = newComment.appendChild(document.createElement('div'));
   body.className = 'comment-body'
   let user = newComment.appendChild(document.createElement('div'));
   user.className = 'sub-script'
   // We need to make sure to strip comments of any special chars they may have
-  // in order to prevent injection attacks
+  // in order to prevent injection attacks.
   user.innerText = '-' + sanitizeHtml(/* str= */ name);
   body.innerText = sanitizeHtml(/* str= */ content);
+
   target.appendChild(newComment);
 }
 /**
