@@ -91,13 +91,13 @@ public class DataServlet extends HttpServlet {
     String userName = request.getParameter("user");
     String comment = request.getParameter("comment-body");
     // it is allowable for the image url to be null
-    String url = getUploadedFileUrl(request, "image");
+    String blobKey = getBlobKey(request, "image").getKeyString();
     commentEntity.setProperty("user", userName);
     commentEntity.setProperty("comment", comment);
     commentEntity.setProperty("timestamp", timeStamp);
-    commentEntity.setProperty("image", url);
+    commentEntity.setProperty("image", blobKey);
     storeData.put(commentEntity);
-    userData.add(new User(userName, comment, url));
+    userData.add(new User(userName, comment, blobKey));
     System.out.format("The username is %s\n. The comment body is %s:", userName,
                       comment);
     response.sendRedirect("/index.html");
@@ -133,10 +133,10 @@ public class DataServlet extends HttpServlet {
       System.out.println("This is running");
       String user = entity.getProperty("user").toString();
       String comment = entity.getProperty("comment").toString();
-      String url = (String)entity.getProperty("image");
+      String blobKey = (String)entity.getProperty("image");
       // TODO(morleyd): Change implementation to use a hash to lower time
       // complexity, need to figure out how this interacts with Gson.
-      User userComment = new User(user, comment, url);
+      User userComment = new User(user, comment, blobKey);
       if (!userData.contains(userComment)) {
         userData.add(userComment);
       }
@@ -147,17 +147,10 @@ public class DataServlet extends HttpServlet {
                                     String formInputElementName) {
     BlobstoreService blobstoreService =
         BlobstoreServiceFactory.getBlobstoreService();
-    Map<String, List<BlobKey>> blobs = blobstoreService.getUploads(request);
-    List<BlobKey> blobKeys = blobs.get("image");
 
-    // User submitted form without selecting a file, so we can't get a URL. (dev
-    // server)
-    if (blobKeys == null || blobKeys.isEmpty()) {
-      return null;
-    }
 
-    // Our form only contains a single file input, so get the first index.
-    BlobKey blobKey = blobKeys.get(0);
+    // Get the value of the blob key from our upload.
+    BlobKey blobKey = getBlobKey(request, formInputElementName);
 
     // User submitted form without selecting a file, so we can't get a URL.
     // (live server)
@@ -183,5 +176,23 @@ public class DataServlet extends HttpServlet {
     } catch (MalformedURLException e) {
       return imagesService.getServingUrl(options);
     }
+  }
+
+  private BlobKey getBlobKey(HttpServletRequest request,
+                            String formInputElementName) {
+    BlobstoreService blobstoreService =
+        BlobstoreServiceFactory.getBlobstoreService();
+    Map<String, List<BlobKey>> blobs = blobstoreService.getUploads(request);
+    List<BlobKey> blobKeys = blobs.get(formInputElementName);
+
+    // User submitted form without selecting a file, so we can't get a URL. (dev
+    // server)
+    if (blobKeys == null || blobKeys.isEmpty()) {
+      return null;
+    }
+
+    // Our form only contains a single file input, so get the first index.
+    BlobKey blobKey = blobKeys.get(0);
+    return blobKey;
   }
 }

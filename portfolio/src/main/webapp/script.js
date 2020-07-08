@@ -136,15 +136,15 @@ function loadComments(path) {
  * @param {string} url The url of an image to add to the comment, this may be
  *     undefined
  */
-function addComment(name, content, url) {
+function addComment(name, content, blobKey) {
   const target = document.getElementById('prior-comments');
   let newComment = document.createElement('div');
   newComment.className = 'comment-full';
   // add an image to the comment only if image is defined
-  if (url !== undefined) {
-    let img = newComment.appendChild(document.createElement('img'));
+  if (blobKey !== undefined) {
+    let img = newComment.appendChild(document.createElement('a'));
     img.className = 'comment-img';
-    img.src = url;
+    img.href ="/server?blob-key="+blobKey;
   }
   let body = newComment.appendChild(document.createElement('div'));
   body.className = 'comment-body';
@@ -178,13 +178,9 @@ function clearComments() {
  * Clear body of the comments div, removing all prior comments.
  */
 function clearBody() {
-  let body = document.querySelectorAll('.comment-body');
-  let names = document.querySelectorAll('.sub-script');
-  for (const commentBody of body) {
-    commentBody.parentNode.removeChild(commentBody);
-  }
-  for (const userName of names) {
-    userName.parentNode.removeChild(userName);
+  let commentFull = document.querySelectorAll('.comment-full');
+  for (const commentContent of commentFull) {
+    commentContent.parentNode.removeChild(commentContent);
   }
 }
 
