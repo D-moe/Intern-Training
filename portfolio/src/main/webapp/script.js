@@ -144,7 +144,7 @@ function addComment(name, content, blobKey) {
   if (blobKey !== undefined) {
     let img = newComment.appendChild(document.createElement('a'));
     img.className = 'comment-img';
-    img.href ="/server?blob-key="+blobKey;
+    img.href ="/serve?blob-key="+blobKey;
   }
   let body = newComment.appendChild(document.createElement('div'));
   body.className = 'comment-body';
