@@ -113,15 +113,15 @@ function loadComments(path) {
               let currentIndex = json[index];
               let userName = currentIndex['userName'];
               let commentBody = currentIndex['commentBody'];
-              let imageUrl = undefined;
-              // we need to check whether an image Url exists
+              let blobKey = undefined;
+              // we need to check whether the blobKey exists
               console.log(json);
-              if (json[index].hasOwnProperty('imageLink')) {
-                imageUrl = currentIndex['imageLink'];
+              if (json[index].hasOwnProperty('blobKey')) {
+                blobKey = currentIndex['blobKey'];
               }
               addComment(
                   /* name= */ userName, /* content= */ commentBody,
-                  /* url= */ imageUrl);
+                  /* blobKey= */ blobKey);
             }
           }
 
@@ -133,7 +133,7 @@ function loadComments(path) {
  * loadComments.
  * @param {string} name The name of the user who made the comment
  * @param {string} content The body of the comment
- * @param {string} url The url of an image to add to the comment, this may be
+ * @param {string} blobKey The blobKey of an image to add to the comment, this may be
  *     undefined
  */
 function addComment(name, content, blobKey) {
