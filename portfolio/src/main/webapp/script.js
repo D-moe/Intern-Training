@@ -139,16 +139,17 @@ function loadComments(path) {
 function addComment(name, content, url) {
   const target = document.getElementById('prior-comments');
   let newComment = document.createElement('div');
+  newComment.className = 'comment-full';
   // add an image to the comment only if image is defined
   if (url !== undefined) {
     let img = newComment.appendChild(document.createElement('img'));
-    img.className = 'comment-img'
-    img.src = url; 
+    img.className = 'comment-img';
+    img.src = url;
   }
   let body = newComment.appendChild(document.createElement('div'));
-  body.className = 'comment-body'
+  body.className = 'comment-body';
   let user = newComment.appendChild(document.createElement('div'));
-  user.className = 'sub-script'
+  user.className = 'sub-script';
   // We need to make sure to strip comments of any special chars they may have
   // in order to prevent injection attacks.
   user.innerText = '-' + sanitizeHtml(/* str= */ name);
@@ -187,6 +188,9 @@ function clearBody() {
   }
 }
 
+/**
+ * Update the image url that is generated for each uploaded image for blobstore.
+ */
 function updateImageUrl() {
   fetch('/blobstore-upload-url')
       .then((response) => {
