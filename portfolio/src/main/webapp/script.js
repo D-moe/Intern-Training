@@ -142,9 +142,9 @@ function addComment(name, content, blobKey) {
   newComment.className = 'comment-full';
   // add an image to the comment only if image is defined
   if (blobKey !== undefined) {
-    let img = newComment.appendChild(document.createElement('a'));
+    let img = newComment.appendChild(document.createElement('img'));
     img.className = 'comment-img';
-    img.href ="/serve?blob-key="+blobKey;
+    img.src ="/serve?blob-key="+blobKey;
   }
   let body = newComment.appendChild(document.createElement('div'));
   body.className = 'comment-body';
