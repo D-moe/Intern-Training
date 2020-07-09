@@ -13,6 +13,7 @@ if (performance.navigation.type == 2) {
 window.onload = (event) => {
   setImageOnMouseOver();
   loadComments('/data');
+  loadUserInfo();
 };
 /**
  * Change the given image to a random one whenever the user hovers over.
@@ -133,8 +134,8 @@ function loadComments(path) {
  * loadComments.
  * @param {string} name The name of the user who made the comment
  * @param {string} content The body of the comment
- * @param {string} blobKey The blobKey of an image to add to the comment, this may be
- *     undefined
+ * @param {string} blobKey The blobKey of an image to add to the comment, this
+ *     may be undefined
  */
 function addComment(name, content, blobKey) {
   const target = document.getElementById('prior-comments');
@@ -144,7 +145,7 @@ function addComment(name, content, blobKey) {
   if (blobKey !== undefined) {
     let img = newComment.appendChild(document.createElement('img'));
     img.className = 'comment-img';
-    img.src ="/serve?blob-key="+blobKey;
+    img.src = '/serve?blob-key=' + blobKey;
   }
   let body = newComment.appendChild(document.createElement('div'));
   body.className = 'comment-body';
@@ -196,4 +197,31 @@ function updateImageUrl() {
         const messageForm = document.getElementById('data-fetch');
         messageForm.action = imageUploadUrl;
       });
+}
+
+/**
+ * Fetch the user's login status and modify showable content on page based on
+ * this status
+ */
+function loadUserInfo() {
+  fetch('/status').then(response => response.json()).then(json => {
+    const login = json['loggedIn'];
+    const userName = json['userName'];
+    const inputPanel = document.querySelector('.input-panel');
+    const userPanel = document.querySelector('.user-panel');
+    const logoutButton = document.getElementById('logout');
+    const loginButton = document.getElementById('login');
+    if (login === true) {
+      inputPanel.style.display = 'block';
+      logoutButton.style.display = 'block';
+      loginButton.style.display = 'none';
+    }
+    else {
+      inputPanel.style.display = 'none';
+      logoutButton.style.display = 'none';
+      loginButton.style.display = 'block';
+    }
+    // Wait to display user panel until we have set login logout visibility.
+    userPanel.style.display = 'block'
+  })
 }

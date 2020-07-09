@@ -6,7 +6,10 @@ public class LoginInfo {
   private boolean loggedIn;
   private String userName;
 
-  public LoginInfo() {}
+  public LoginInfo() {
+    loggedIn = false;
+    userName = "";
+  }
 
   public LoginInfo(boolean loggedIn, String userName) {
     this.loggedIn = loggedIn;

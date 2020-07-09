@@ -9,14 +9,34 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
-@WebServlet("/login")
-public class Login extends HttpServlet {
+// TODO(morleyd): This really needs to use user sessions otherwise for multiple
+// users, we will
+// get confused who is logged in. In essence, support multiple
+@WebServlet("/status")
+public class LoginStatus extends HttpServlet {
   private UserService userService;
 
   @Override
   public void init() {
     userService = UserServiceFactory.getUserService();
+  }
+  @Override
+  public void doGet(HttpServletRequest request, HttpServletResponse response)
+      throws IOException {
+    LoginInfo info = new LoginInfo();
+    Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+    if (userService.isUserLoggedIn()) {
+      info.setLoggedIn(true);
+      info.setUserName(userService.getCurrentUser().getEmail());
+    }
+    // in case where the user is not logged in default constructor will give
+    // empty string and false
+    String json = gson.toJson(info);
+    response.getWriter().print(json);
   }
 
   @Override
