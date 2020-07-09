@@ -76,7 +76,20 @@
           </div>
         </div>
       </div>
+      <div id="prior-comments" onload="loadComments()">
+      </div>
+      <div id="full-comment">
+        <form action="/data" method="POST">
+          <textarea class="comment-body-form" name="comment-body"
+            onfocus="this.value='';">Your comment goes here.</textarea>
+          <div id="submit-panel">
+            <textarea class="user" name="user" onfocus="this.value=''">Username</textarea>
+            <input id="comment-submit" type="submit" value="Comment">
+          </div>
+        </form>
+      </div>
     </div>
+  </div>
   </div>
   </div>
 </body>
