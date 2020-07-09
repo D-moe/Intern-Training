@@ -1,3 +1,5 @@
+/*This allows the background to extend throughout the whole page.*/
+
 * {
   margin: 0px;
   padding: 0px;
@@ -17,8 +19,6 @@ textarea:focus {
   outline: none;
   text-align: center;
 }
-
-/*Remove the default highlight around a textarea when selected in Chrome.*/
 
 #content {
   width: 100%;
@@ -88,8 +88,6 @@ textarea:focus {
 .tile-back img, .tile-front img, .portrait-tile-back img {
   width: 100%;
   height: 100%;
-  /*Uncomment line if don't want to distort image resolution.*/
-  /*object-fit:cover;*/
 }
 
 .title {
@@ -172,10 +170,6 @@ ul {
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   font-size: .8vw;
-}
-
-.tile-front {
-  /*This is left empty in anticipation of further styling.*/
 }
 
 .tile-back {
