@@ -169,6 +169,10 @@ function clearBody() {
   }
 }
 
+/**
+ * Fetch a unique image url to be used to submit the blob
+ *
+ */
 function updateImageUrl() {
   fetch('/blobstore-upload-url')
       .then((response) => {
