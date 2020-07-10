@@ -133,8 +133,8 @@ function loadComments(path) {
  * loadComments.
  * @param {string} name The name of the user who made the comment
  * @param {string} content The body of the comment
- * @param {string} blobKey The blobKey of an image to add to the comment, this may be
- *     undefined
+ * @param {string} blobKey The blobKey of an image to add to the comment, this
+ *     may be undefined
  */
 function addComment(name, content, blobKey) {
   const target = document.getElementById('prior-comments');
@@ -144,7 +144,7 @@ function addComment(name, content, blobKey) {
   if (blobKey !== undefined) {
     let img = newComment.appendChild(document.createElement('img'));
     img.className = 'comment-img';
-    img.src ="/serve?blob-key="+blobKey;
+    img.src = '/serve?blob-key=' + blobKey;
   }
   let body = newComment.appendChild(document.createElement('div'));
   body.className = 'comment-body';
