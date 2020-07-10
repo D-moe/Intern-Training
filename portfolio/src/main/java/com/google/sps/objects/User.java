@@ -16,7 +16,7 @@ public final class User {
   public String getUserName() { return this.userName; }
 
   public String getCommentBody() { return this.commentBody; }
-  
+
   public String getImageLink() { return this.imageLink; }
 
   @Override
