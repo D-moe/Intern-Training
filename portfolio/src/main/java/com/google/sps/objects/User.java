@@ -14,10 +14,8 @@ public final class User {
   }
 
   public String getUserName() { return this.userName; }
-
-  public String getImageLink() { return this.imageLink; }
-
   public String getCommentBody() { return this.commentBody; }
+  public String getImageLink() { return this.imageLink; }
 
   @Override
   public boolean equals(Object o) {

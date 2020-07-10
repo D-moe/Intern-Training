@@ -61,8 +61,8 @@ public class DataServlet extends HttpServlet {
       refreshData(request, response);
     }
     // The additional parameters used here ensure that the
-    System.out.println("The array is " + userData);
     // generated JSON looks much nicer to parse in the browser.
+    System.out.println("The array is " + userData);
     Gson gson = new GsonBuilder().setPrettyPrinting().create();
     String json = gson.toJson(userData);
     System.out.format("Printing out the following JSON: %s", json);
@@ -150,8 +150,8 @@ public class DataServlet extends HttpServlet {
     Map<String, List<BlobKey>> blobs = blobstoreService.getUploads(request);
     List<BlobKey> blobKeys = blobs.get("image");
 
-    // User submitted form without selecting a file, so we can't get a URL. (dev
-    // server)
+    // User submitted form without selecting a file, so we can't get a URL (dev
+    // server).
     if (blobKeys == null || blobKeys.isEmpty()) {
       return null;
     }
@@ -159,8 +159,8 @@ public class DataServlet extends HttpServlet {
     // Our form only contains a single file input, so get the first index.
     BlobKey blobKey = blobKeys.get(0);
 
-    // User submitted form without selecting a file, so we can't get a URL.
-    // (live server)
+    // User submitted form without selecting a file, so we can't get a URL (live
+    // server).
     BlobInfo blobInfo = new BlobInfoFactory().loadBlobInfo(blobKey);
     if (blobInfo.getSize() == 0) {
       blobstoreService.delete(blobKey);
@@ -177,8 +177,9 @@ public class DataServlet extends HttpServlet {
     // To support running in Google Cloud Shell with AppEngine's devserver, we
     // must use the relative path to the image, rather than the path returned by
     // imagesService which contains a host.
+    String servingUrl = imagesService.getServingUrl(options);
     try {
-      URL url = new URL(imagesService.getServingUrl(options));
+      URL url = new URL(servingUrl);
       return url.getPath();
     } catch (MalformedURLException e) {
       return imagesService.getServingUrl(options);

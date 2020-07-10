@@ -110,14 +110,14 @@ function loadComments(path) {
       .then(
           json => {
             for (index in json) {
-              let currentIndex = json[index];
-              let userName = currentIndex['userName'];
-              let commentBody = currentIndex['commentBody'];
+              let currentComment = json[index];
+              let userName = currentComment['userName'];
+              let commentBody = currentComment['commentBody'];
               let imageUrl = undefined;
               // we need to check whether an image Url exists
               console.log(json);
-              if (json[index].hasOwnProperty('imageLink')) {
-                imageUrl = currentIndex['imageLink'];
+              if (currentComment.hasOwnProperty('imageLink')) {
+                imageUrl = currentComment['imageLink'];
               }
               addComment(
                   /* name= */ userName, /* content= */ commentBody,
