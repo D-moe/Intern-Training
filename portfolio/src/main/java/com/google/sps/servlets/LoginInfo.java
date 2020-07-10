@@ -2,6 +2,9 @@ package com.google.sps.servlets;
 
 import java.util.Objects;
 
+/**
+ * Store data for user login.
+ */
 public class LoginInfo {
   private boolean loggedIn;
   private String userName;

@@ -12,9 +12,9 @@ import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-// TODO(morleyd): This really needs to use user sessions otherwise for multiple
-// users, we will
-// get confused who is logged in. In essence, support multiple
+/**
+ * Return current user status and information.
+ */
 @WebServlet("/status")
 public class LoginStatus extends HttpServlet {
   private UserService userService;

@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 
+/**
+ * Logout the user from their account. 
+ */
 @WebServlet("/logout")
 public class Logout extends HttpServlet {
   private UserService userService;

@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 
+/**
+ * Log a user in or redirect to home page if already logged in.
+ */
 @WebServlet("/login")
 public class Login extends HttpServlet {
   private UserService userService;
