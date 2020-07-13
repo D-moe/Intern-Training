@@ -135,7 +135,6 @@ ul {
 }
 
 .portrait-tile-back div {
-  overflow: auto;
   width: 100%;
   height: 100%
 }
@@ -308,4 +307,13 @@ li {
 .comment-img {
   display: block;
   margin-left: 45%;
+}
+
+.portrait-tile-back #map div {
+  width: auto;
+  height: 100%;
+}
+
+.portrait-tile{
+  visibility:hidden;
 }

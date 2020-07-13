@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="bootstrap2/glyphicons-only-bootstrap/css/bootstrap.min.css">
   <script src="script.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key="></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
@@ -27,12 +28,15 @@
           <div class="portrait-tile-front">
             <img src="images/Headshot.jpg"></img>
           </div>
-          <div class="portrait-tile-back">
+          <div id="self-portrait-back" class="portrait-tile-back">
             <div>
               <p> <b>College:</b> UCLA</p>
               <p> <b>Degree:</b> Computer Science and Engineering</p>
               <p> <b>Favorite Food:</b> Lasagna</p>
-              <p><b>Favorite T-shirt:</b> A teal t-shirt with a white penguin, it looks much cooler than it sounds.</p>
+              <p> <b>Favorite T-shirt:</b> A teal t-shirt with a white penguin, it looks much cooler than it sounds.</p>
+              <p> <b>Favorite Places on Campus:</b></p> 
+              <div id="map">
+              </div>
             </div>
           </div>
         </div>
@@ -85,7 +89,7 @@
           </div>
         </div>
       </div>
-      <div id="prior-comments" onload="loadComments()">
+      <div id="prior-comments" onload="loadComments();">
         <div id="nav-bar">
           <div class="input-panel">
             <input id="select-num-results" name="limit" type="number" value="20" min="0" max="300" step="1"

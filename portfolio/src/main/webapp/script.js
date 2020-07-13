@@ -14,6 +14,7 @@ window.onload = (event) => {
   setImageOnMouseOver();
   loadComments('/data');
   loadUserInfo();
+  loadMap();
 };
 /**
  * Change the given image to a random one whenever the user hovers over.
@@ -117,7 +118,8 @@ function loadComments(path) {
               let blobKey = undefined;
               // we need to check whether the blobKey exists
               console.log(json);
-              if (json[index].hasOwnProperty('blobKey')) {
+              if (currentIndex.hasOwnProperty('blobKey')) {
+                console.log('The current json index is ' + currentIndex)
                 blobKey = currentIndex['blobKey'];
               }
               addComment(
@@ -215,13 +217,37 @@ function loadUserInfo() {
       inputPanel.style.display = 'block';
       logoutButton.style.display = 'block';
       loginButton.style.display = 'none';
-    }
-    else {
+    } else {
       inputPanel.style.display = 'none';
       logoutButton.style.display = 'none';
       loginButton.style.display = 'block';
     }
     // Wait to display user panel until we have set login logout visibility.
     userPanel.style.display = 'block'
+  })
+}
+
+/**
+ * Fetch map and add to page from google map api.
+ */
+function loadMap() {
+  // Hide element when map is loading to get rid of flicker.
+  const elementToHide = document.querySelector('.portrait-tile');
+  const map = new google.maps.Map(
+      document.getElementById('map'),
+      {center: {lat: 34.0689, lng: -118.4452}, zoom: 16});
+  elementToHide.style.visibility = 'visible';
+  const fetchDataUrl = '/favorite';
+  fetch(fetchDataUrl).then(reponse => reponse.json()).then(json => {
+    for (const place of json) {
+      console.log('The latitude is ' + place['latitude']);
+      console.log('The longitude is ' + place['longitude']);
+      console.log('The name is ' + place['name']);
+      let marker = new google.maps.Marker({
+        position: {lat: place['latitude'], lng: place['longitude']},
+        title: place['name']
+      });
+      marker.setMap(map);
+    }
   })
 }
