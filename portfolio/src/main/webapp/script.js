@@ -116,8 +116,7 @@ function loadComments(path) {
               let commentBody = currentIndex['commentBody'];
               let blobKey = undefined;
               // we need to check whether the blobKey exists
-              console.log(json);
-              if (json[index].hasOwnProperty('blobKey')) {
+              if (currentIndex.hasOwnProperty('blobKey')) {
                 blobKey = currentIndex['blobKey'];
               }
               addComment(
@@ -215,8 +214,7 @@ function loadUserInfo() {
       inputPanel.style.display = 'block';
       logoutButton.style.display = 'block';
       loginButton.style.display = 'none';
-    }
-    else {
+    } else {
       inputPanel.style.display = 'none';
       logoutButton.style.display = 'none';
       loginButton.style.display = 'block';

@@ -85,7 +85,13 @@ public class DataServlet extends HttpServlet {
     String userName = request.getParameter("user");
     String comment = request.getParameter("comment-body");
     // it is allowable for the image url to be null
-    String blobKey = getBlobKey(request, "image").getKeyString();
+    BlobKey currentKey = getBlobKey(request, "image");
+    String blobKey;
+    if (currentKey == null) {
+      blobKey = null;
+    } else {
+      blobKey = currentKey.getKeyString();
+    }
     commentEntity.setProperty("user", userName);
     commentEntity.setProperty("comment", comment);
     commentEntity.setProperty("timestamp", timeStamp);
