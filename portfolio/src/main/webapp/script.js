@@ -123,6 +123,12 @@ function loadComments(path) {
                   /* name= */ userName, /* content= */ commentBody,
                   /* blobKey= */ blobKey);
             }
+            const handleError = document.querySelectorAll('.comment-img')
+                                    .forEach(function(img) {
+                                      img.onerror = function() {
+                                        this.style.display = 'none';
+                                      };
+                                    });
           }
 
       )
