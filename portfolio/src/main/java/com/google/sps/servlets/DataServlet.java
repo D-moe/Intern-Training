@@ -28,18 +28,19 @@ import com.google.appengine.api.images.ImagesServiceFactory;
 import com.google.appengine.api.images.ServingUrlOptions;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.sps.objects.User;
+import com.google.sps.objects.Comment;
 
 /**
- * A class to fetch data from the datastore library.
- * @param userData The current data that has been fetched from the datastore
- *     library, it acts as a local cache of the data that has been recorded.
- *     Both the doGet and doPost methods rely on this local cache, only
- *     refreshing if the refresh parameter is specified and true.
+ * Store data through the datastore service using get/post requests.
  */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
-  private ArrayList<User> userData = new ArrayList<User>();
+  /* The userData is the current data that has been fetched from the datastore
+   * service, it acts as a local cache of the data that has been recorded. Both
+   * the doGet and doPost methods rely on this local cache, only refreshing if
+   * the refresh parameter is specified and true.
+   */
+  private ArrayList<Comment> userData = new ArrayList<Comment>();
   private DatastoreService storeData;
   // Intent is for the get method to be called on the load of the comment body.
   @Override
@@ -73,7 +74,6 @@ public class DataServlet extends HttpServlet {
   public void doPost(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
     response.setContentType("text/html");
-
     boolean refreshCache;
     String cacheValue = request.getParameter("refresh");
     refreshCache = Boolean.parseBoolean(cacheValue);
@@ -83,8 +83,6 @@ public class DataServlet extends HttpServlet {
       response.sendRedirect("/index.html");
       return;
     }
-    // TODO(morleyd): Add error checking in case some of the expected headers
-    // are not included in the request, etc.
 
     long timeStamp = System.currentTimeMillis();
     Entity commentEntity = new Entity("Comment");
@@ -93,11 +91,11 @@ public class DataServlet extends HttpServlet {
     // it is allowable for the image url to be null
     String url = getUploadedFileUrl(request, "image");
     commentEntity.setProperty("user", userName);
-    commentEntity.setProperty("comment", comment);
+    commentEntity.setProperty("comment", commentData);
     commentEntity.setProperty("timestamp", timeStamp);
     commentEntity.setProperty("image", url);
     storeData.put(commentEntity);
-    userData.add(new User(userName, comment, url));
+    userData.add(new Comment(userName, comment, url));
     System.out.format("The username is %s\n. The comment body is %s:", userName,
                       comment);
     response.sendRedirect("/index.html");
@@ -107,15 +105,13 @@ public class DataServlet extends HttpServlet {
   }
   private void refreshData(HttpServletRequest request,
                            HttpServletResponse response) {
-
     int queryLimit;
-
     String requestLimit = request.getParameter("limit");
 
     try {
       // Convert the input to an integer.
       queryLimit = Integer.parseInt(requestLimit);
-      System.out.println("parse successful");
+      System.out.println("Integer parsed successfully while refreshing data.");
     } catch (NumberFormatException e) {
       System.err.println("Could not convert to int: " + requestLimit +
                          " use default");
@@ -124,7 +120,7 @@ public class DataServlet extends HttpServlet {
 
     // Reset the data.
     userData.clear();
-    System.out.println(queryLimit);
+    System.out.println("The current queryLimit is " + queryLimit + ".");
     FetchOptions options = FetchOptions.Builder.withLimit(queryLimit);
     Query recentComments =
         new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
@@ -136,7 +132,7 @@ public class DataServlet extends HttpServlet {
       String url = (String)entity.getProperty("image");
       // TODO(morleyd): Change implementation to use a hash to lower time
       // complexity, need to figure out how this interacts with Gson.
-      User userComment = new User(user, comment, url);
+      User userComment = new Comment(user, comment, url);
       if (!userData.contains(userComment)) {
         userData.add(userComment);
       }

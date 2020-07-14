@@ -258,11 +258,11 @@ li {
   margin-top: .4%;
 }
 
-.btn {
+.button {
   padding: 3px;
 }
 
-.btn:hover {
+.button:hover {
   background-color: gray;
 }
 

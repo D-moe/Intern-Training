@@ -23,7 +23,7 @@ function setImageOnMouseOver() {
         getRandomFile(
             /* element= */ document.querySelector('#rand-back-tile img'),
             /* path= */ 'images/random/', /* fileName= */ 'test',
-            /* numElems= */ 4)
+            /* numElems= */ 4);
       });
 }
 /**
@@ -64,7 +64,7 @@ function getRandomFile(element, path, fileName, numElems) {
 function fetchAndModify(path, element) {
   fetch(path)
       .then(response => response.text())
-      .then(content => element.innerHTML = content)
+        .then(content => element.innerHTML = content);
 }
 /**
  * Creates an innerHtml element and then reads its text to remove special
@@ -93,7 +93,7 @@ function fetchAndChangeBody(path) {
       newComment.innerText = json[index];
       target.appendChild(newComment);
     }
-  })
+  });
 }
 
 /**
@@ -124,8 +124,7 @@ function loadComments(path) {
                   /* url= */ imageUrl);
             }
           }
-
-      )
+      );
 }
 
 /**
@@ -171,7 +170,7 @@ function clearComments() {
       })
       .then(() => {
         loadComments('/data?refresh=true');
-      })
+      });
 }
 
 /**

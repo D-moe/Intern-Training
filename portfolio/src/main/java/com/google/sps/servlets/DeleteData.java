@@ -13,6 +13,9 @@ import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 
+/**
+ * Delete data from datastore object when called. 
+ */
 @WebServlet("/deletedata")
 public class DeleteData extends HttpServlet {
   @Override
