@@ -39,10 +39,9 @@ public class BlobstoreUploadUrlServlet extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
     String uploadUrl = blobstoreService.createUploadUrl("/data");
+    System.out.println("The upload url is " + uploadUrl);
 
     response.setContentType("text/html");
     response.addHeader("Cache-Control",
-                       "no-cache, no-store, must-revalidate, max-age=0");
-    response.getWriter().println(uploadUrl);
   }
 }
