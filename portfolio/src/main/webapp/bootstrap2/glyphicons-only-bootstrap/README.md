@@ -18,7 +18,3 @@ bower install glyphicons-only-bootstrap
 ```
 <link rel='stylesheet' href='bower_components/glyphicons-only-bootstrap/css/bootstrap.min.css' />
 ```
-
-## License
-
-All license belongs to Bootstrap and the intention to build this package is not in commercial usage. If there could be any license issue reported, I will purge this from my repository.

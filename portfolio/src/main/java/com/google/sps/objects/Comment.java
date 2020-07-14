@@ -1,12 +1,15 @@
 package com.google.sps.objects;
 
 import java.util.Objects;
-
-public final class User {
+/**
+ * Store the content of a given comment, contents converted into Json using the
+ * Gson library.
+ */
+public final class Comment {
   private final String userName;
   private final String commentBody;
 
-  public User(String userName, String commentBody) {
+  public Comment(String userName, String commentBody) {
     this.userName = userName;
     this.commentBody = commentBody;
   }
@@ -19,10 +22,10 @@ public final class User {
   public boolean equals(Object o) {
     if (o == this)
       return true;
-    if (!(o instanceof User)) {
+    if (!(o instanceof Comment)) {
       return false;
     }
-    User user = (User)o;
+    Comment user = (Comment)o;
     return Objects.equals(userName, user.userName) &&
         Objects.equals(commentBody, user.commentBody);
   }

@@ -23,7 +23,7 @@ function setImageOnMouseOver() {
         getRandomFile(
             /* element= */ document.querySelector('#rand-back-tile img'),
             /* path= */ 'images/random/', /* fileName= */ 'test',
-            /* numElems= */ 4)
+            /* numElems= */ 4);
       });
 }
 /**
@@ -64,7 +64,7 @@ function getRandomFile(element, path, fileName, numElems) {
 function fetchAndModify(path, element) {
   fetch(path)
       .then(response => response.text())
-      .then(content => element.innerHTML = content)
+        .then(content => element.innerHTML = content);
 }
 /**
  * Creates an innerHtml element and then reads its text to remove special
@@ -93,7 +93,7 @@ function fetchAndChangeBody(path) {
       newComment.innerText = json[index];
       target.appendChild(newComment);
     }
-  })
+  });
 }
 
 /**
@@ -115,8 +115,7 @@ function loadComments(path) {
               addComment(/* name= */ userName, /* content= */ commentBody);
             }
           }
-
-      )
+      );
 }
 
 /**
@@ -129,9 +128,9 @@ function addComment(name, content) {
   const target = document.getElementById('prior-comments');
   let newComment = document.createElement('div');
   let body = newComment.appendChild(document.createElement('div'));
-  body.className = 'comment-body'
+    body.className = 'comment-body';
   let user = newComment.appendChild(document.createElement('div'));
-  user.className = 'sub-script'
+    user.className = 'sub-script';
   // We need to make sure to strip comments of any special chars they may have
   // in order to prevent injection attacks
   user.innerText = '-' + sanitizeHtml(/* str= */ name);
@@ -152,7 +151,7 @@ function clearComments() {
       })
       .then(() => {
         loadComments('/data?refresh=true');
-      })
+      });
 }
 
 /**
