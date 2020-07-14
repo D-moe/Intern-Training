@@ -11,6 +11,11 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+if(performance.navigation.type == 2){
+  console.log("Page was reloaded");
+  fetchBlobstoreUrlAndShowForm();
+}
+
 
 function fetchBlobstoreUrlAndShowForm() {
   fetch('/blobstore-upload-url')
