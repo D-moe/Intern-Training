@@ -91,7 +91,7 @@ public class DataServlet extends HttpServlet {
     // it is allowable for the image url to be null
     String url = getUploadedFileUrl(request, "image");
     commentEntity.setProperty("user", userName);
-    commentEntity.setProperty("comment", commentData);
+    commentEntity.setProperty("comment", comment);
     commentEntity.setProperty("timestamp", timeStamp);
     commentEntity.setProperty("image", url);
     storeData.put(commentEntity);
@@ -132,7 +132,7 @@ public class DataServlet extends HttpServlet {
       String url = (String)entity.getProperty("image");
       // TODO(morleyd): Change implementation to use a hash to lower time
       // complexity, need to figure out how this interacts with Gson.
-      User userComment = new Comment(user, comment, url);
+      Comment userComment = new Comment(user, comment, url);
       if (!userData.contains(userComment)) {
         userData.add(userComment);
       }
