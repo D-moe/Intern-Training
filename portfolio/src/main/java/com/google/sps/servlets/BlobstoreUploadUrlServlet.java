@@ -43,5 +43,6 @@ public class BlobstoreUploadUrlServlet extends HttpServlet {
 
     response.setContentType("text/html");
     response.addHeader("Cache-Control",
+                       "no-cache, no-store, must-revalidate, max-age=0");
   }
 }
