@@ -1,6 +1,3 @@
-/**
- * Set initial actions to be run when window first loads.
- */
 window.onload = (event) => {
   setImageOnMouseOver();
   loadComments('/data');
@@ -41,10 +38,10 @@ function getRandomFile(element, path, fileName, numElems) {
   // JavaScript. After conferring with help line seems this is indeed
   // impossible.
   // TODO(morleyd): Implement on server side to clean up need for numElems, etc
-  // in the directory For now copy directly the example code with minor
+  // in the directory. For now copy directly the example code with minor
   // modifications.
-  let randomFile =
-      path + fileName + (Math.floor(Math.random() * numElems) + 1) + '.jpg';
+  const computedIndex = (Math.floor(Math.random() * numElems) + 1);
+  const randomFile = path + fileName + computedIndex + '.jpg';
   element.src = randomFile;
 }
 /**
