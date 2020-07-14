@@ -1,4 +1,13 @@
 /**
+ * Ensure that Url properly reloads on back arrow, prevents error that was
+ * occurring from reused upload Url. This may not be the most friendly solution
+ * for other browsers look at the following link for reference:
+ * https://stackoverflow.com/questions/43043113/how-to-force-reloading-a-page-when-using-browser-back-button
+ */
+if (performance.navigation.type == 2) {
+  updateImageUrl();
+}
+/**
  * Set initial actions to be run when window first loads.
  */
 window.onload = (event) => {
@@ -14,7 +23,7 @@ function setImageOnMouseOver() {
         getRandomFile(
             /* element= */ document.querySelector('#rand-back-tile img'),
             /* path= */ 'images/random/', /* fileName= */ 'test',
-            /* numElems= */ 4)
+            /* numElems= */ 4);
       });
 }
 /**
@@ -55,7 +64,7 @@ function getRandomFile(element, path, fileName, numElems) {
 function fetchAndModify(path, element) {
   fetch(path)
       .then(response => response.text())
-      .then(content => element.innerHTML = content)
+        .then(content => element.innerHTML = content);
 }
 /**
  * Creates an innerHtml element and then reads its text to remove special
@@ -84,7 +93,7 @@ function fetchAndChangeBody(path) {
       newComment.innerText = json[index];
       target.appendChild(newComment);
     }
-  })
+  });
 }
 
 /**
@@ -106,8 +115,7 @@ function loadComments(path) {
               addComment(/* name= */ userName, /* content= */ commentBody);
             }
           }
-
-      )
+      );
 }
 
 /**
@@ -120,9 +128,9 @@ function addComment(name, content) {
   const target = document.getElementById('prior-comments');
   let newComment = document.createElement('div');
   let body = newComment.appendChild(document.createElement('div'));
-  body.className = 'comment-body'
+    body.className = 'comment-body';
   let user = newComment.appendChild(document.createElement('div'));
-  user.className = 'sub-script'
+    user.className = 'sub-script';
   // We need to make sure to strip comments of any special chars they may have
   // in order to prevent injection attacks
   user.innerText = '-' + sanitizeHtml(/* str= */ name);
@@ -143,7 +151,7 @@ function clearComments() {
       })
       .then(() => {
         loadComments('/data?refresh=true');
-      })
+      });
 }
 
 /**
@@ -158,4 +166,19 @@ function clearBody() {
   for (const userName of names) {
     userName.parentNode.removeChild(userName);
   }
+}
+
+/**
+ * Fetch a unique image url to be used to submit the blob
+ *
+ */
+function updateImageUrl() {
+  fetch('/blobstore-upload-url')
+      .then((response) => {
+        return response.text();
+      })
+      .then((imageUploadUrl) => {
+        const messageForm = document.getElementById('data-fetch');
+        messageForm.action = imageUploadUrl;
+      });
 }

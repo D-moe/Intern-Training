@@ -1,6 +1,6 @@
 target/
 .idea
-walkthroughs
+walkthroughs/*
 tests
 portfolio/.*
 portfolio/finalClangFormat
