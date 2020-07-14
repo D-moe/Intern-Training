@@ -7,7 +7,15 @@
   <link rel="stylesheet" href="style.css">
   <!--Add icon library for linkedIn, FaceBook, etc.-->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="bootstrap2/glyphicons-only-bootstrap/css/bootstrap.min.css">
   <script src="script.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+  <script src="bootstrap-input-spinner.js"></script>
+  <script>
+    $("input[type='number']").inputSpinner()
+  </script>
 </head>
 
 <body>
@@ -77,17 +85,37 @@
         </div>
       </div>
       <div id="prior-comments" onload="loadComments()">
+        <div class="input-panel">
+          <input id="select-num-results" name="limit" type="number" value="20" min="0" max="300" step="1"
+            form="data-reload" />
+          <button type="submit" class="button" form="data-reload">
+            <span class="glyphicon glyphicon-refresh"></span>
+          </button>
+          <button type="button" class="button" onclick="clearComments()">
+            <span class="glyphicon glyphicon-trash"></span>
+          </button>
+          <button type="submit" class="button" form="data-fetch">
+            <span class="glyphicon glyphicon-ok"></span>
+          </button>
+          <button type="button" class="button" onclick="showComment()">
+            <span class="glyphicon glyphicon-plus"></span>
+          </button>
+        </div>
       </div>
       <div id="full-comment">
-        <form action="/data" method="POST">
-          <textarea class="comment-body-form" name="comment-body"
-            onfocus="this.value='';">Your comment goes here.</textarea>
-          <div id="submit-panel">
-            <textarea class="user" name="user" onfocus="this.value=''">Username</textarea>
-            <input id="comment-submit" type="submit" value="Comment">
+        <form id="data-fetch" action="/data" method="POST">
+          <div id="add-comment">
+            <textarea class="comment-body-form" name="comment-body"
+              onfocus="this.value='';">Your comment goes here.</textarea>
+            <div id="submit-panel">
+              <textarea class="user" name="user" onfocus="this.value=''">Username</textarea>
+            </div>
           </div>
         </form>
       </div>
+      <form id="data-reload" action="/data" method="POST">
+        <input type="hidden" name="refresh" value="true">
+      </form>
     </div>
   </div>
   </div>
