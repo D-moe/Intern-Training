@@ -283,3 +283,8 @@ li {
   display: inline-block;
   vertical-align: top;
 }
+
+.comment-full img {
+  width: 10%;
+  height: auto;
+}

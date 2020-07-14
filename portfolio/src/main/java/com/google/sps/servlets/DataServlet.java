@@ -1,20 +1,31 @@
 package com.google.sps.servlets;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.appengine.api.blobstore.BlobInfo;
+import com.google.appengine.api.blobstore.BlobInfoFactory;
+import com.google.appengine.api.blobstore.BlobKey;
+import com.google.appengine.api.blobstore.BlobstoreService;
+import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
+import com.google.appengine.api.images.ImagesService;
+import com.google.appengine.api.images.ImagesServiceFactory;
+import com.google.appengine.api.images.ServingUrlOptions;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.sps.objects.User;
@@ -51,6 +62,7 @@ public class DataServlet extends HttpServlet {
     }
     // The additional parameters used here ensure that the
     // generated JSON looks much nicer to parse in the browser.
+    System.out.println("The array is " + userData);
     Gson gson = new GsonBuilder().setPrettyPrinting().create();
     String json = gson.toJson(userData);
     System.out.format("Printing out the following JSON: %s", json);
@@ -78,11 +90,14 @@ public class DataServlet extends HttpServlet {
     Entity commentEntity = new Entity("Comment");
     String userName = request.getParameter("user");
     String comment = request.getParameter("comment-body");
+    // it is allowable for the image url to be null
+    String url = getUploadedFileUrl(request, "image");
     commentEntity.setProperty("user", userName);
     commentEntity.setProperty("comment", comment);
     commentEntity.setProperty("timestamp", timeStamp);
+    commentEntity.setProperty("image", url);
     storeData.put(commentEntity);
-    userData.add(new User(userName, comment));
+    userData.add(new User(userName, comment, url));
     System.out.format("The username is %s\n. The comment body is %s:", userName,
                       comment);
     response.sendRedirect("/index.html");
@@ -118,12 +133,56 @@ public class DataServlet extends HttpServlet {
       System.out.println("This is running");
       String user = entity.getProperty("user").toString();
       String comment = entity.getProperty("comment").toString();
+      String url = (String)entity.getProperty("image");
       // TODO(morleyd): Change implementation to use a hash to lower time
       // complexity, need to figure out how this interacts with Gson.
-      User userComment = new User(user, comment);
+      User userComment = new User(user, comment, url);
       if (!userData.contains(userComment)) {
         userData.add(userComment);
       }
+    }
+  }
+
+  private String getUploadedFileUrl(HttpServletRequest request,
+                                    String formInputElementName) {
+    BlobstoreService blobstoreService =
+        BlobstoreServiceFactory.getBlobstoreService();
+    Map<String, List<BlobKey>> blobs = blobstoreService.getUploads(request);
+    List<BlobKey> blobKeys = blobs.get("image");
+
+    // User submitted form without selecting a file, so we can't get a URL (dev
+    // server).
+    if (blobKeys == null || blobKeys.isEmpty()) {
+      return null;
+    }
+
+    // Our form only contains a single file input, so get the first index.
+    BlobKey blobKey = blobKeys.get(0);
+
+    // User submitted form without selecting a file, so we can't get a URL (live
+    // server).
+    BlobInfo blobInfo = new BlobInfoFactory().loadBlobInfo(blobKey);
+    if (blobInfo.getSize() == 0) {
+      blobstoreService.delete(blobKey);
+      return null;
+    }
+
+    // We could check the validity of the file here, e.g. to make sure it's an
+    // image file https://stackoverflow.com/q/10779564/873165
+
+    // Use ImagesService to get a URL that points to the uploaded file.
+    ImagesService imagesService = ImagesServiceFactory.getImagesService();
+    ServingUrlOptions options = ServingUrlOptions.Builder.withBlobKey(blobKey);
+
+    // To support running in Google Cloud Shell with AppEngine's devserver, we
+    // must use the relative path to the image, rather than the path returned by
+    // imagesService which contains a host.
+    String servingUrl = imagesService.getServingUrl(options);
+    try {
+      URL url = new URL(servingUrl);
+      return url.getPath();
+    } catch (MalformedURLException e) {
+      return imagesService.getServingUrl(options);
     }
   }
 }
