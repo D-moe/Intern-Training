@@ -116,12 +116,12 @@ function loadComments(path) {
               let imageUrl = undefined;
               // we need to check whether an image Url exists
               console.log(json);
-              if (currentComment.hasOwnProperty('imageLink')) {
-                imageUrl = currentComment['imageLink'];
+              if (currentComment.hasOwnProperty('blobKey')) {
+                imageUrl = currentComment['blobKey'];
               }
               addComment(
                   /* name= */ userName, /* content= */ commentBody,
-                  /* url= */ imageUrl);
+                  /* blobKey= */ blobKey);
             }
           }
       );
@@ -132,18 +132,18 @@ function loadComments(path) {
  * loadComments.
  * @param {string} name The name of the user who made the comment
  * @param {string} content The body of the comment
- * @param {string} url The url of an image to add to the comment, this may be
- *     undefined
+ * @param {string} blobKey The blobKey of an image to add to the comment, this
+ *     may be undefined
  */
-function addComment(name, content, url) {
+function addComment(name, content, blobKey) {
   const target = document.getElementById('prior-comments');
   let newComment = document.createElement('div');
   newComment.className = 'comment-full';
   // add an image to the comment only if image is defined
-  if (url !== undefined) {
+  if (blobKey !== undefined) {
     let img = newComment.appendChild(document.createElement('img'));
     img.className = 'comment-img';
-    img.src = url;
+    img.src = '/serve?blob-key=' + blobKey;
   }
   let body = newComment.appendChild(document.createElement('div'));
   body.className = 'comment-body';
@@ -177,13 +177,9 @@ function clearComments() {
  * Clear body of the comments div, removing all prior comments.
  */
 function clearBody() {
-  let body = document.querySelectorAll('.comment-body');
-  let names = document.querySelectorAll('.sub-script');
-  for (const commentBody of body) {
-    commentBody.parentNode.removeChild(commentBody);
-  }
-  for (const userName of names) {
-    userName.parentNode.removeChild(userName);
+  let commentFull = document.querySelectorAll('.comment-full');
+  for (const commentContent of commentFull) {
+    commentContent.parentNode.removeChild(commentContent);
   }
 }
 
