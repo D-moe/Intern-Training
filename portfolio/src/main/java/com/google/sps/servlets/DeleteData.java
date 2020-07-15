@@ -22,9 +22,6 @@ public class DeleteData extends HttpServlet {
   public void doPost(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
     DatastoreService storeData = DatastoreServiceFactory.getDatastoreService();
-    // TODO(morleyd): See if this code generalizes for >500 entries, think there
-    // might be an upper limit for number of entries deleted at a time
-
     // TODO(morleyd): See if there is a better way to mass delete values, this
     // seems like a common task and there is likely some optimization to do it
     // faster

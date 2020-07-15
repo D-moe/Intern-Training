@@ -127,8 +127,6 @@ public class DataServlet extends HttpServlet {
       // stored in the datastorage.
       String comment = entity.getProperty("comment").toString();
       String blobKey = (String)entity.getProperty("image");
-      // TODO(morleyd): Change implementation to use a hash to lower time
-      // complexity, need to figure out how this interacts with Gson.
       Comment userComment = new Comment(user, comment, blobKey);
       if (!userData.contains(userComment)) {
         userData.add(userComment);
