@@ -85,18 +85,16 @@ public class DataServlet extends HttpServlet {
     String comment = request.getParameter("comment-body");
     // it is allowable for the image url to be null
     BlobKey currentKey = getBlobKey(request, "image");
-    String blobKey;
-    if (currentKey == null) {
-      blobKey = null;
-    } else {
-      blobKey = currentKey.getKeyString();
+    String keyString = null;
+    if (currentKey != null) {
+      keyString = currentKey.getKeyString();
     }
     commentEntity.setProperty("user", userName);
     commentEntity.setProperty("comment", comment);
     commentEntity.setProperty("timestamp", timeStamp);
-    commentEntity.setProperty("image", blobKey);
+    commentEntity.setProperty("image", keyString);
     storeData.put(commentEntity);
-    userData.add(new User(userName, comment, blobKey));
+    userData.add(new User(userName, comment, keyString));
     System.out.format("The username is %s\n. The comment body is %s:", userName,
                       comment);
     response.sendRedirect("/index.html");
