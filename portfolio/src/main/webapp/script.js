@@ -113,11 +113,11 @@ function loadComments(path) {
               let currentComment = json[index];
               let userName = currentComment['userName'];
               let commentBody = currentComment['commentBody'];
-              let imageUrl = undefined;
+              let blobKey = undefined;
               // we need to check whether an image Url exists
               console.log(json);
               if (currentComment.hasOwnProperty('blobKey')) {
-                imageUrl = currentComment['blobKey'];
+                blobKey = currentComment['blobKey'];
               }
               addComment(
                   /* name= */ userName, /* content= */ commentBody,
