@@ -106,32 +106,26 @@ function fetchAndChangeBody(path) {
  * @param {string} path The path to use when fetching data
  */
 function loadComments(path) {
-  fetch(path)
-      .then(response => response.json())
-      .then(
-          json => {
-            for (index in json) {
-              let currentIndex = json[index];
-              let userName = currentIndex['userName'];
-              let commentBody = currentIndex['commentBody'];
-              let blobKey = undefined;
-              // we need to check whether the blobKey exists
-              if (currentIndex.hasOwnProperty('blobKey')) {
-                blobKey = currentIndex['blobKey'];
-              }
-              addComment(
-                  /* name= */ userName, /* content= */ commentBody,
-                  /* blobKey= */ blobKey);
-            }
-            const handleError = document.querySelectorAll('.comment-img')
-                                    .forEach(function(img) {
-                                      img.onerror = function() {
-                                        this.style.display = 'none';
-                                      };
-                                    });
-          }
-
-      )
+  fetch(path).then(response => response.json()).then(json => {
+    for (index in json) {
+      let currentIndex = json[index];
+      let userName = currentIndex['userName'];
+      let commentBody = currentIndex['commentBody'];
+      let blobKey = undefined;
+      // we need to check whether the blobKey exists
+      if (currentIndex.hasOwnProperty('blobKey')) {
+        blobKey = currentIndex['blobKey'];
+      }
+      addComment(
+          /* name= */ userName, /* content= */ commentBody,
+          /* blobKey= */ blobKey);
+    }
+    document.querySelectorAll('.comment-img').forEach(function(img) {
+      img.onerror = function() {
+        this.style.display = 'none';
+      };
+    });
+  });
 }
 
 /**
@@ -177,7 +171,7 @@ function clearComments() {
       })
       .then(() => {
         loadComments('/data?refresh=true');
-      })
+      });
 }
 
 /**
@@ -226,6 +220,6 @@ function loadUserInfo() {
       loginButton.style.display = 'block';
     }
     // Wait to display user panel until we have set login logout visibility.
-    userPanel.style.display = 'block'
-  })
+    userPanel.style.display = 'block';
+  });
 }
