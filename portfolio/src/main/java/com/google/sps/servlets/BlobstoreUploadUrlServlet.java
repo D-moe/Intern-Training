@@ -30,18 +30,20 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet("/blobstore-upload-url")
 public class BlobstoreUploadUrlServlet extends HttpServlet {
-
+  private BlobstoreService blobstoreService;
+  @Override
+  public void init() {
+    blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
+  }
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
-    BlobstoreService blobstoreService =
-        BlobstoreServiceFactory.getBlobstoreService();
-    String uploadUrl = blobstoreService.createUploadUrl("/my-form-handler");
+    String uploadUrl = blobstoreService.createUploadUrl("/data");
+    System.out.println("The upload url is " + uploadUrl);
 
     response.setContentType("text/html");
     response.addHeader("Cache-Control",
                        "no-cache, no-store, must-revalidate, max-age=0");
-   /* response.addHeader("Expires", "0");*/
     response.getWriter().println(uploadUrl);
   }
 }

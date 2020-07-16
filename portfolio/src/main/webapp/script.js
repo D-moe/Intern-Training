@@ -1,38 +1,42 @@
-
-// Copyright 2019 Google LLC
-//
-// Licensed under the Apache License, Version 2.0 (the "License"); you may not
-// use this file except in compliance with the License. You may obtain a copy of
-// the License at
-//
-//     https://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
-// WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
-// License for the specific language governing permissions and limitations under
-// the License.
-
+/**
+ * Ensure that Url properly reloads on back arrow, prevents error that was
+ * occurring from reused upload Url. This may not be the most friendly solution
+ * for other browsers look at the following link for reference:
+ * https://stackoverflow.com/questions/43043113/how-to-force-reloading-a-page-when-using-browser-back-button
+ */
+if (performance.navigation.type == 2) {
+  updateImageUrl();
+}
+/**
+ * Set initial actions to be run when window first loads.
+ */
 window.onload = (event) => {
-  SetImageOnMouseOver();
-  loadComments();
+  setImageOnMouseOver();
+  loadComments('/data');
 };
-
+/**
  * Change the given image to a random one whenever the user hovers over.
  */
-function SetImageOnMouseOver() {
+function setImageOnMouseOver() {
   document.getElementById('rand-front-tile')
       .addEventListener('mouseover', function() {
         getRandomFile(
             /* element= */ document.querySelector('#rand-back-tile img'),
             /* path= */ 'images/random/', /* fileName= */ 'test',
-            /* numElems= */ 4)
+            /* numElems= */ 4);
       });
+}
+/**
+ * Change the visibility of the comment fields so the user can add a new
+ * comment.
+ */
+function showComment() {
+  document.getElementById('add-comment').style.visibility = 'visible';
 }
 
 /**
- * Select a random file from a given path and change the given element src to
- * that file.
+ * Return a random file, currently used to fetch a random image and display on
+ * hover.
  * @param {string} element - which DOM element to modify
  * @param {string} path - the path starting from the webapp/ directory that the
  *     files are located in
@@ -53,29 +57,29 @@ function getRandomFile(element, path, fileName, numElems) {
   element.src = randomFile;
 }
 /**
- *
+ * Get response from url and modify given element innerHtml.
  * @param {string} path - the path the given query refers to
  * @param {DOM element} element - an element in the DOM for selecting
  */
 function fetchAndModify(path, element) {
   fetch(path)
       .then(response => response.text())
-      .then(content => element.innerHTML = content)
+        .then(content => element.innerHTML = content);
 }
-/*
- * Creates an innerHTML element and then reads its text to remove special
+/**
+ * Creates an innerHtml element and then reads its text to remove special
  * characters from the input
- * @param {string} str The input to remove special characters from to prevent
- *     scripting attacks
+ * @param {string} inputText The input to remove special characters from to
+ *     prevent scripting attacks
  */
-function sanitizeHtml(str) {
-  let temp = document.createElement('div');
-  temp.textContent = str;
-  return temp.innerHTML;
+function sanitizeHtml(inputText) {
+  let convertDiv = document.createElement('div');
+  convertDiv.textContent = inputText;
+  return convertDiv.innerHTML;
 };
 
 
-/*
+/**
  * Fetches the value return by the given data service and then
  * modifies the content of a div to store each of the response values as a
  * paragraph.
@@ -83,53 +87,112 @@ function sanitizeHtml(str) {
  */
 function fetchAndChangeBody(path) {
   fetch(path).then(response => response.json()).then(json => {
+    const target = document.getElementById('comment');
+    let newComment = document.createElement('p');
     for (index in json) {
-      const target = document.getElementById('comment');
-      let newComment = document.createElement('p');
       newComment.innerText = json[index];
       target.appendChild(newComment);
     }
-  })
+  });
 }
 
-/*
+/**
  * Fetches the comment data and adds each of them to the loaded
  * content.
  * TODO(morleyd): change individual comment load to be asynchronous to improve
  * performance. It might also make sense to have a hard limit on the number of
  * comments loaded, think about this for future implementations.
+ * @param {string} path The path to use when fetching data
  */
-function loadComments() {
-  fetch('\data')
+function loadComments(path) {
+  fetch(path)
       .then(response => response.json())
       .then(
           json => {
             for (index in json) {
-              let userName = json[index]['userName'];
-              let commentBody = json[index]['commentBody'];
-              addComment(/* name= */ userName, /* commentBody= */ commentBody);
+              let currentComment = json[index];
+              let userName = currentComment['userName'];
+              let commentBody = currentComment['commentBody'];
+              let blobKey = undefined;
+              // we need to check whether a blobKey exists
+              console.log(json);
+              if (currentComment.hasOwnProperty('blobKey')) {
+                blobKey = currentComment['blobKey'];
+              }
+              addComment(
+                  /* name= */ userName, /* content= */ commentBody,
+                  /* blobKey= */ blobKey);
             }
           }
-
-      )
+      );
 }
 
 /**
- * A helper that creates the divs for a new comment, intended to be called by
+ * Creates divs for a new comment, intended to be called by
  * loadComments.
  * @param {string} name The name of the user who made the comment
  * @param {string} content The body of the comment
+ * @param {string} blobKey The blobKey of an image to add to the comment, this
+ *     may be undefined
  */
-function addComment(name, content) {
+function addComment(name, content, blobKey) {
   const target = document.getElementById('prior-comments');
   let newComment = document.createElement('div');
+  newComment.className = 'comment-full';
+  // add an image to the comment only if image is defined
+  if (blobKey !== undefined) {
+    let img = newComment.appendChild(document.createElement('img'));
+    img.className = 'comment-img';
+    img.src = '/serve?blob-key=' + blobKey;
+  }
   let body = newComment.appendChild(document.createElement('div'));
-  body.className = 'comment-body'
+  body.className = 'comment-body';
   let user = newComment.appendChild(document.createElement('div'));
-  user.className = 'sub-script'
+  user.className = 'sub-script';
   // We need to make sure to strip comments of any special chars they may have
-  // in order to prevent injection attacks
+  // in order to prevent injection attacks.
   user.innerText = '-' + sanitizeHtml(/* str= */ name);
   body.innerText = sanitizeHtml(/* str= */ content);
+
   target.appendChild(newComment);
+}
+/**
+ * Clear all generated comments from database and refetch.
+ */
+function clearComments() {
+  fetch('/deletedata', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json;charset=utf-8'},
+    body: ''
+  })
+      .then(() => {
+        clearBody();
+      })
+      .then(() => {
+        loadComments('/data?refresh=true');
+      });
+}
+
+/**
+ * Clear body of the comments div, removing all prior comments.
+ */
+function clearBody() {
+  let commentFull = document.querySelectorAll('.comment-full');
+  for (const commentContent of commentFull) {
+    commentContent.parentNode.removeChild(commentContent);
+  }
+}
+
+/**
+ * Update the image url that is generated for each uploaded image for blobstore.
+ */
+function updateImageUrl() {
+  fetch('/blobstore-upload-url')
+      .then((response) => {
+        return response.text();
+      })
+      .then((imageUploadUrl) => {
+        const messageForm = document.getElementById('data-fetch');
+        messageForm.action = imageUploadUrl;
+      });
 }

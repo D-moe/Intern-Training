@@ -51,7 +51,7 @@ textarea:focus {
 #prior-comments {
   width: 80%;
   height: 20%;
-  background-color: rgba(0, 128, 128, .4);
+  background-color: rgba(0, 128, 128, .8);
   margin-left: 10%;
   margin-top: 1%;
   border: .1px lightgray;
@@ -207,10 +207,6 @@ ul {
   font-size: .8vw;
 }
 
-.comment-body {
-  font-size: 1.4vw;
-}
-
 ::-webkit-scrollbar {
   display: none;
   background: transparent;
@@ -221,13 +217,13 @@ li {
 }
 
 .comment-body {
-  height: 2.5vh;
+  height: auto;
   font-size: 1vw;
 }
 
 .comment-body-form {
   font-size: .5vw;
-  height:2.5vh;
+  height: 2.5vh;
 }
 
 .user {
@@ -252,6 +248,37 @@ li {
   vertical-align: top;
 }
 
-#full-comment{
-  margin-top:.4%;
+#full-comment {
+  margin-top: .4%;
+}
+
+.button {
+  padding: 3px;
+}
+
+.button:hover {
+  background-color: gray;
+}
+
+.input-panel {
+  text-align: right;
+}
+
+#add-comment {
+  visibility: hidden;
+}
+
+#select-num-results {
+  width: 54px;
+  height: 22px;
+}
+
+#file-upload {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.comment-full img {
+  width: 10%;
+  height: auto;
 }
