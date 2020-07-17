@@ -21,8 +21,12 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.ListIterator;
 
+/**
+ * Returns a range of possible meeting times given events of individuals, the
+ * length of the meeting, and the people involved.
+ */
 public final class FindMeetingQuery {
-  // comparator using the Java 8 lambda syntax
+  // Comparator using the Java 8 lambda syntax.
   private final Comparator<Event> ORDER_END =
       (Event a, Event b) -> Long.compare(a.getWhen().end(), b.getWhen().end());
 
@@ -71,7 +75,7 @@ public final class FindMeetingQuery {
     noOptional.removeIf(event
                         -> event.getAttendees().stream().allMatch(
                             attendee -> optionalAttendees.contains(attendee)));
-    // change this to get overlapping events
+    // Change this to get overlapping events.
     ArrayList<TimeRange> timesWithOptional = getUnavailableTimes(eventList);
     ArrayList<TimeRange> timesWithoutOptional = getUnavailableTimes(noOptional);
     toReturn = getInverse(timesWithOptional, request);
