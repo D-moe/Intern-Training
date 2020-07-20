@@ -277,6 +277,7 @@ li {
 #select-num-results {
   width: 54px;
   height: 22px;
+  vertical-align: top;
 }
 
 #file-upload {
@@ -284,7 +285,28 @@ li {
   vertical-align: top;
 }
 
-.comment-full img{
-  width:10%;
-  height:auto;
+.comment-full img {
+  width: 10%;
+  height: auto;
+}
+
+.user-panel {
+  float: right;
+  padding-right: 3px;
+  display: none;
+}
+
+.input-panel {
+  float: right;
+  display: none;
+}
+
+#nav-bar {
+  display: block;
+  height: 10%;
+}
+
+.comment-img {
+  display: block;
+  margin-left: 45%;
 }

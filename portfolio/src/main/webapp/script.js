@@ -13,6 +13,7 @@ if (performance.navigation.type == 2) {
 window.onload = (event) => {
   setImageOnMouseOver();
   loadComments('/data');
+  loadUserInfo();
 };
 /**
  * Change the given image to a random one whenever the user hovers over.
@@ -105,27 +106,26 @@ function fetchAndChangeBody(path) {
  * @param {string} path The path to use when fetching data
  */
 function loadComments(path) {
-  fetch(path)
-      .then(response => response.json())
-      .then(
-          json => {
-            for (index in json) {
-              let currentIndex = json[index];
-              let userName = currentIndex['userName'];
-              let commentBody = currentIndex['commentBody'];
-              let blobKey = undefined;
-              // we need to check whether the blobKey exists
-              console.log(json);
-              if (json[index].hasOwnProperty('blobKey')) {
-                blobKey = currentIndex['blobKey'];
-              }
-              addComment(
-                  /* name= */ userName, /* content= */ commentBody,
-                  /* blobKey= */ blobKey);
-            }
-          }
-
-      )
+  fetch(path).then(response => response.json()).then(json => {
+    for (index in json) {
+      let currentIndex = json[index];
+      let userName = currentIndex['userName'];
+      let commentBody = currentIndex['commentBody'];
+      let blobKey = undefined;
+      // we need to check whether the blobKey exists
+      if (currentIndex.hasOwnProperty('blobKey')) {
+        blobKey = currentIndex['blobKey'];
+      }
+      addComment(
+          /* name= */ userName, /* content= */ commentBody,
+          /* blobKey= */ blobKey);
+    }
+    document.querySelectorAll('.comment-img').forEach(function(img) {
+      img.onerror = function() {
+        this.style.display = 'none';
+      };
+    });
+  });
 }
 
 /**
@@ -171,7 +171,7 @@ function clearComments() {
       })
       .then(() => {
         loadComments('/data?refresh=true');
-      })
+      });
 }
 
 /**
@@ -196,4 +196,30 @@ function updateImageUrl() {
         const messageForm = document.getElementById('data-fetch');
         messageForm.action = imageUploadUrl;
       });
+}
+
+/**
+ * Fetch the user's login status and modify showable content on page based on
+ * this status
+ */
+function loadUserInfo() {
+  fetch('/status').then(response => response.json()).then(json => {
+    const login = json['loggedIn'];
+    const userName = json['userName'];
+    const inputPanel = document.querySelector('.input-panel');
+    const userPanel = document.querySelector('.user-panel');
+    const logoutButton = document.getElementById('logout');
+    const loginButton = document.getElementById('login');
+    if (login === true) {
+      inputPanel.style.display = 'block';
+      logoutButton.style.display = 'block';
+      loginButton.style.display = 'none';
+    } else {
+      inputPanel.style.display = 'none';
+      logoutButton.style.display = 'none';
+      loginButton.style.display = 'block';
+    }
+    // Wait to display user panel until we have set login logout visibility.
+    userPanel.style.display = 'block';
+  });
 }
